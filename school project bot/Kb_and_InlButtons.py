@@ -14,6 +14,22 @@ subject_list.add(InlineKeyboardButton(text="Физика", callback_data="phys")
                  InlineKeyboardButton(text="Информатика", callback_data="informatics"))
 subject_list.add(InlineKeyboardButton(text="Назад", callback_data="back_from_subject"))
 
+# инлайн кнопки для предметов (контрольная)
+subject_list_kr = InlineKeyboardMarkup(row_width=2)
+subject_list_kr.add(InlineKeyboardButton(text="Физика", callback_data="phys_kr"))
+                #  InlineKeyboardButton(text="Математика", callback_data="mathem_kr"),
+                #  InlineKeyboardButton(text="Информатика", callback_data="informatics_kr"))
+subject_list_kr.add(InlineKeyboardButton(text="Назад", callback_data="back_from_subject_kr"))
+
+
+# (физика) инлайн кнопки для выбора раздела темы (контрольная)
+theme_phys_list_kr = InlineKeyboardMarkup(row_width=2)
+theme_phys_list_kr.add(InlineKeyboardButton(text="Кинематика", callback_data="Kinematics_kr"))
+                #     InlineKeyboardButton(text="Баллистика", callback_data="Ballistics_kr"),
+                #     InlineKeyboardButton(text="Статика", callback_data="Statics_kr"),
+                #     InlineKeyboardButton(text="Работа и энергия", callback_data="Work_and_energy_kr"))
+theme_phys_list_kr.add(InlineKeyboardButton(text="Назад", callback_data="back_from_theme_phys_kr"))
+
 
 # (физика) инлайн кнопки для выбора раздела темы
 theme_phys_list = InlineKeyboardMarkup(row_width=2)
