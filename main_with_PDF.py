@@ -30,9 +30,9 @@ class tasks:
             pdf.multi_cell(200, 10, txt=st)
             t = sqrt((int(s) * 2) / 9.8)
             if 'время' in st:
-                pdf.multi_cell(200, 10, txt=f'Ответ: {round(t, 2)} сек', align='L')
+                pdf.multi_cell(190, 10, txt=f'Ответ: {round(t, 2)} сек', align='L')
             else:
-                pdf.multi_cell(200, 10, txt=f'Ответ: {round(int(f) * t, 2)} м.', align='L')
+                pdf.multi_cell(190, 10, txt=f'Ответ: {round(int(f) * t, 2)} м.', align='L')
             pdf.output('pdff.pdf')
 
 
