@@ -9,7 +9,7 @@ class Users():
         try:
             self.List = pd.read_csv('./users.csv')
         except:
-            self.List = pd.DataFrame(columns=['UserID', 'task_type', 'subject', 'theme', 'theme_section', 'subtopic', 'number'])
+            self.List = pd.DataFrame(columns=['UserID', 'task_type', 'subject', 'theme', 'theme_section', 'number', "export"])
     def save(self):
         self.List.to_csv('./users.csv')
     def set_parametr(self,id,parametr,value):
@@ -38,6 +38,7 @@ async def callback_query_data(callback_query: types.CallbackQuery, bot): # callb
         users.set_parametr(id, 'task_type', "контрольная работа")
         await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите интересующий предмет", reply_markup=subject_list_kr)
 
+
 # кнопки "назад"
     elif callback_query.data == "back_from_subject":
         await callback_query.answer()
@@ -51,126 +52,149 @@ async def callback_query_data(callback_query: types.CallbackQuery, bot): # callb
     elif callback_query.data == "back_from_theme_phys_kr":
         await callback_query.answer()
         await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите интересующий предмет", reply_markup=subject_list_kr)
-    elif callback_query.data == "back_from_phys":
+    elif callback_query.data == "back_from_k_m_phys":
         await callback_query.answer()
         await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Доступные темы", reply_markup=theme_phys_list)
-    elif callback_query.data == "back_from_u_q_phys":
+    elif callback_query.data == "back_from_b_m_phys":
         await callback_query.answer()
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=phys_list)
-    elif callback_query.data == "back_from_ea_q_phys":
-        await callback_query.answer()
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=phys_list)
-    elif callback_query.data == "back_from_mathem":
-        await callback_query.answer()
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите интересующий предмет", reply_markup=subject_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=theme_phys_list)
 
-# новый
-# предмет
+
+# новый предмет
     elif callback_query.data == "phys": # предмет физика
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subject', "физика")
+        users.set_parametr(id, 'subject', "физика")
         await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Доступные темы", reply_markup=theme_phys_list)
     elif callback_query.data == "phys_kr": # предмет физика (контрольная)
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subject', "физика")
+        users.set_parametr(id, 'subject', "физика")
         await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Доступные темы", reply_markup=theme_phys_list_kr)
+
 
 # (физика) новые темы
     elif callback_query.data == "Kinematics": # кинематика
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme', "кинематика")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=phys_list)
+        users.set_parametr(id, 'theme', "кинематика")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=k_m_phys_list)
     elif callback_query.data == "Ballistics": # баллистика
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme', "баллистика")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Раздел данной темы пока не доступен")
-    elif callback_query.data == "Statics": # статика
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme', "статика")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Раздел данной темы пока не доступен")
-    elif callback_query.data == "Work_and_energy": # работа и энергия
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme', "работа и энергия")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Раздел данной темы пока не доступен")
+        users.set_parametr(id, 'theme', "баллистика")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=b_m_phys_list)
+
 
 # (физика) новые темы (контрольная)
+    elif callback_query.data == "Mechanics_kr": # механика (контрольная)
+        await callback_query.answer()
+        users.set_parametr(id, 'theme', "механика")
+        users.set_parametr(id, 'theme_section', "")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
     elif callback_query.data == "Kinematics_kr": # кинематика (контрольная)
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme', "кинематика")
-        users.set_parametr(callback_query['from']['id'], 'theme_section', "")
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
+        users.set_parametr(id, 'theme', "кинематика")
+        users.set_parametr(id, 'theme_section', "")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
+    elif callback_query.data == "Ballistics_kr": # баллистика (контрольная)
+        await callback_query.answer()
+        users.set_parametr(id, 'theme', "баллистика")
+        users.set_parametr(id, 'theme_section', "")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
 
-# (физика) новый раздел темы и её искомые
-    elif callback_query.data == "u_motion": # тема - равномерное движение
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme_section', "равномерное движение")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Что нужно найти", reply_markup=u_q_phys_list)
-    elif callback_query.data == "u_time": # найти время
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "время")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
-    elif callback_query.data == "u_distance": # найти путь
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "путь")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
-    elif callback_query.data == "u_speed": # найти скорость
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "скорость")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
-    elif callback_query.data == "dependency_graphs": # найти скорость
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "графики зависимости")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
 
-# (физика) новый раздел темы и её искомые
-    elif callback_query.data == "ea_motion": # тема - равноускоренное движение
+# (физика) разделы темы для кинематики
+    elif callback_query.data == "uniform_motion": # тема - равномерное движение
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme_section', "равноускоренное движение")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Что нужно найти", reply_markup=ea_q_phys_list)
-    elif callback_query.data == "ea_time": # найти время
+        users.set_parametr(id, 'theme_section', "равномерное движение")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
+    elif callback_query.data == "equiaxed_motion": # тема - равноускоренное движение
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "время")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
-    elif callback_query.data == "ea_distance": # найти путь
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "путь")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
-    elif callback_query.data == "ea_boost": # найти ускорение
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "ускорение")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
-    elif callback_query.data == "ea_first_speed": # найти начальную скорость
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "начальная скорость")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
-    elif callback_query.data == "ea_second_speed": # найти конечную скорость
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subtopic', "конечная скорость")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Введите количество задач")
+        users.set_parametr(id, 'theme_section', "равноускоренное движение")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
 
-# новый
-# предмет
-    elif callback_query.data == "mathem": # предмет математика
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subject', "математика")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите направление", reply_markup=mathem_list)
 
-# (математика) новый раздел темы и её искомые
-    elif callback_query.data == "algebra": # направление/тема - алгебра
+# (физика) разделы темы для баллистики
+    elif callback_query.data == "free_fall_of_bodies":
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme_section', "алгебра")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Алгебра пока не доступна")
+        users.set_parametr(id, "theme_section", "свободное падение тел")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
+    elif callback_query.data == "ballistic_motion":
+        await callback_query.answer()
+        users.set_parametr(id, "theme_section", "баллистическое движение")
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
 
-# (математика) новый раздел темы и её искомые
-    elif callback_query.data == "geometry": # направление/тема - геометрия
-        await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'theme_section', "геометрия")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Геометрия пока не доступна")
 
-# новый
-# предмет
-    elif callback_query.data == "informatics": # предмет информатика
+# выбрать количество задач
+    elif callback_query.data == "1":
         await callback_query.answer()
-        users.set_parametr(callback_query['from']['id'], 'subject', "информатика")
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Информатика пока не доступна")
+        users.set_parametr(id, "number", 1)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "2":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 2)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "3":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 3)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "4":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 4)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "5":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 5)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "6":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 6)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "7":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 7)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "8":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 8)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "9":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 9)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "10":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 10)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "11":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 11)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "12":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 12)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "13":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 13)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "14":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 14)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+    elif callback_query.data == "15":
+        await callback_query.answer()
+        users.set_parametr(id, "number", 15)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+
+
+# как отправить готовые задачи
+    elif callback_query.data == "telega":
+        await callback_query.answer()
+        users.set_parametr(id, "export", "send_to_telega")
+        # await bot.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)
+    elif callback_query.data == "pdf":
+        await callback_query.answer()
+        users.set_parametr(id, "export", "send_pdf")
+        # await bot.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)
+    elif callback_query.data == "telega_and_pdf":
+        await callback_query.answer()
+        users.set_parametr(id, "export", "send_to_telega_and_pdf")
+        # await bot.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)

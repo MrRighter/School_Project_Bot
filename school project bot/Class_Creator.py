@@ -1,7 +1,19 @@
 from Class_Gener import *
+from fpdf import FPDF
 
 
 class Creator():
+    def export_task(self, path, key):
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.add_font('Arial', '', './Arial.ttf', uni=True)
+        pdf.set_font('Arial', '', 14)
+
+        res = self.function_creator(key)
+        pdf.multi_cell(190, 10, txt=res)
+        pdf.output(path)
+
+        return res
     def function_creator(self, key):
         #Тип: КР по теме, подготовка к КР, СР, ДЗ
         #Complexity = key['Complexity']#Сложность: сложно (C), нормально (B), легко (A)
@@ -11,49 +23,22 @@ class Creator():
             if key["Subject"] == "физика":
                 if key["Theme"] == "кинематика":
                     if key["Theme_section"] == "равномерное движение":
-                        if key["Subtopic"] == "время":
                             for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().uniform_time()}\n\n'
+                                text_result += f'{i+1}) {TaskGenerator().uniform_motion()}\n\n'
                             return text_result
-                        elif key["Subtopic"] == "путь":
-                            for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().uniform_distance()}\n\n'
-                            return text_result
-                        elif key["Subtopic"] == "скорость":
-                            for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().uniform_speed()}\n\n'
-                            return text_result
-                        elif key["Subtopic"] == "графики зависимости":
-                            for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().uniform_equations()}\n\n'
-                            return text_result
-                        else:
-                            pass
                     elif key["Theme_section"] == "равноускоренное движение":
-                        if key["Subtopic"] == "ускорение":
                             for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().equidistant_acceleration()}\n\n'
+                                text_result += f'{i+1}) {TaskGenerator().equiaxed_motion()}\n\n'
                             return text_result
-                        elif key["Subtopic"] == "конечная скорость":
-                            for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().equidistant_final_speed()}\n\n'
-                            return text_result
-                        elif key["Subtopic"] == "начальная скорость":
-                            for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().equidistant_start_speed()}\n\n'
-                            return text_result
-                        elif key["Subtopic"] == "время":
-                            for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().equidistant_time()}\n\n'
-                            return text_result
-                        elif key["Subtopic"] == "путь":
-                            for i in range(int(key["N"])):
-                                text_result += f'{i+1}) {TaskGenerator().equidistant_distance()}\n\n'
-                            return text_result
-                        else:
-                            pass
                 elif key["Theme"] == "баллистика":
-                    pass
+                    if key["Theme_section"] == "свободное падение тел":
+                            for i in range(int(key["N"])):
+                                text_result += f'{i+1}) {TaskGenerator().ballistics_motion()}\n\n'
+                            return text_result
+                    elif key["Theme_section"] == "баллистическое движение":
+                            for i in range(int(key["N"])):
+                                text_result += f'{i+1}) {TaskGenerator().ballistics_corner_motion()}\n\n'
+                            return text_result
                 elif key["Theme"] == "статика":
                     pass
                 elif key["Theme"] == "работа и энергия":
@@ -64,22 +49,23 @@ class Creator():
             if key["Subject"] == "физика":
                 if key["Theme"] == "кинематика":
                     if key["Theme_section"] == "":
-                        if key["Subtopic"] == "":
-                            num_questions = round(0.3 * int(key["N"]))
-                            num_tests = round(0.2 * int(key["N"]))
-                            num_problems = int(key["N"]) - num_questions - num_tests
-
-                            for i in range(num_questions):
-                                text_result += f'{i+1}) {TaskGenerator().questions_for_kr()}\n\n'
-                            for i in range(num_tests):
-                                text_result += f'{num_questions + i+1}) {TaskGenerator().tests_for_kr()}\n\n'
-                            for i in range(num_problems):
-                                text_result += f'{num_questions + num_tests + i+1}) {TaskGenerator().phis_kr_kinematics()}\n\n'
-
-                            return text_result
-                else:
-                    pass
-            else:
-                pass
-        else:
-            pass
+                        num_questions = round(0.3 * int(key["N"]))
+                        num_tests = round(0.2 * int(key["N"]))
+                        num_problems = int(key["N"]) - num_questions - num_tests
+                        for i in range(num_questions):
+                            text_result += f'{i+1}) {TaskGenerator().questions_for_kr_kinematics()}\n\n'
+                        for i in range(num_tests):
+                            text_result += f'{num_questions + i+1}) {TaskGenerator().tests_for_kr_kinematics()}\n\n'
+                        for i in range(num_problems):
+                            text_result += f'{num_questions + num_tests + i+1}) {TaskGenerator().phis_kr_kinematics()}\n\n'
+                        return text_result
+                elif key["Theme"] == "механика":
+                    if key["Theme_section"] == "":
+                        for i in range(int(key["N"])):
+                            text_result += f'{i+1}) {TaskGenerator().phis_kr_mechanics()}\n\n'
+                        return text_result
+                elif key["Theme"] == "баллистика":
+                    if key["Theme_section"] == "":
+                        for i in range(int(key["N"])):
+                            text_result += f'{i+1}) {TaskGenerator().phis_kr_ballistics()}\n\n'
+                        return text_result

@@ -44,16 +44,23 @@ async def type_list_command(message: types.Message):
 async def send_result(message: types.Message):
     id = message['from']['id']
     index = users.get_user_index(id)
+
     try:
-        number = int(message.text)
-        users.set_parametr(id, 'number', number)
         key = {'Type': users.List['task_type'][index],
-               'Subject': users.List['subject'][index],
-               'Theme': users.List['theme'][index],
-               'Theme_section': users.List['theme_section'][index],
-               'Subtopic': users.List['subtopic'][index],
-               "N": users.List['number'][index]}
-        await message.answer(text=Creator().function_creator(key))
+                'Subject': users.List['subject'][index],
+                'Theme': users.List['theme'][index],
+                'Theme_section': users.List['theme_section'][index],
+                "N": users.List['number'][index]}
+
+        path = f'./{message.from_user.full_name} {message.from_user.id}.pdf'
+        if users.List['export'][index] == "send_to_telega":
+            await message.answer(text=Creator().function_creator(key))
+        elif users.List['export'][index] == "send_pdf":
+            Creator().export_task(path, key)
+            await message.answer_document(open(path, "rb"))
+        elif users.List['export'][index] == "send_to_telega_and_pdf":
+            await message.answer(text=Creator().export_task(path, key))
+            await message.answer_document(open(path, "rb"))
     except:
         await message.answer(text="Некорректный ввод данных")
 
