@@ -62,7 +62,7 @@ async def send_result(message: types.Message):
             await message.answer(text=Creator().export_task(path, key))
             await message.answer_document(open(path, "rb"))
     except:
-        await message.answer(text="Некорректный ввод данных")
+        await message.answer(text="Некорректный ввод данных!!!!!!!!!!!!!!!!")
 
 
 if __name__ == '__main__':
