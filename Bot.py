@@ -33,7 +33,7 @@ async def handle_callback_query(callback_query: types.CallbackQuery):
     await call.callback_query_data(callback_query, bot)
 
 
-@dp.message_handler(commands=['let_is_go_study']) # 'главная' команда для запуска
+@dp.message_handler(commands=['let_us_go_study']) # 'главная' команда для запуска
 async def type_list_command(message: types.Message):
     await message.answer("Выберите нужный вам тип решения задач", reply_markup=task_type_list)
 

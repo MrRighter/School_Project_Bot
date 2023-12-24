@@ -125,63 +125,63 @@ async def callback_query_data(callback_query: types.CallbackQuery, bot): # callb
     elif callback_query.data == "1":
         await callback_query.answer()
         users.set_parametr(id, "number", 1)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "2":
         await callback_query.answer()
         users.set_parametr(id, "number", 2)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "3":
         await callback_query.answer()
         users.set_parametr(id, "number", 3)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "4":
         await callback_query.answer()
         users.set_parametr(id, "number", 4)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "5":
         await callback_query.answer()
         users.set_parametr(id, "number", 5)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "6":
         await callback_query.answer()
         users.set_parametr(id, "number", 6)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "7":
         await callback_query.answer()
         users.set_parametr(id, "number", 7)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "8":
         await callback_query.answer()
         users.set_parametr(id, "number", 8)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "9":
         await callback_query.answer()
         users.set_parametr(id, "number", 9)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "10":
         await callback_query.answer()
         users.set_parametr(id, "number", 10)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "11":
         await callback_query.answer()
         users.set_parametr(id, "number", 11)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "12":
         await callback_query.answer()
         users.set_parametr(id, "number", 12)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "13":
         await callback_query.answer()
         users.set_parametr(id, "number", 13)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "14":
         await callback_query.answer()
         users.set_parametr(id, "number", 14)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
     elif callback_query.data == "15":
         await callback_query.answer()
         users.set_parametr(id, "number", 15)
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправит задачи", reply_markup=export_list)
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите как отправить задачи", reply_markup=export_list)
 
 
 # как отправить готовые задачи
