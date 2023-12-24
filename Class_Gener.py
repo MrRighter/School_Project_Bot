@@ -6,6 +6,11 @@ speed_var = [i for i in range(5, 36)]
 distance_var = [i for i in range(50, 251)]
 time_var = [i for i in range(5, 46)]
 
+e_time_var = [i for i in range(10)]
+acceleration_var = [i for i in range(2, 11)]
+first_speed_var = [i for i in range(2, 11)]
+second_speed_var = [i for i in range(15, 36)]
+
 ball_speed_var = [i for i in range(1, 6)]
 ball_distance_var = [i for i in range(1, 11)]
 ball_time_var = [i for i in range(1, 11)]
@@ -99,17 +104,11 @@ class TaskGenerator():
         self.func = choice([self.uniform_motion_first(), self.uniform_motion_second(), self.uniform_motion_third(), self.uniform_motion_fourth(),
                             self.uniform_motion_fifth(), self.uniform_motion_sixth()])
         return self.func
-# , self.uniform_motion_seventh(), self.uniform_motion_eighth(),
-#                             self.uniform_motion_ninth()
 
-    # def equiaxed_motion(self):
-    #     self.func = choice([self.equiaxed_motion_first(), self.equiaxed_motion_second(), self.equiaxed_motion_third(), self.equiaxed_motion_fourth(),
-    #                    self.equiaxed_motion_fifth(), self.equiaxed_motion_sixth(), self.equiaxed_motion_seventh(), self.equiaxed_motion_eighth(),
-    #                    self.equiaxed_motion_tenth(), self.equiaxed_motion_eleventh(), self.equiaxed_motion_twelfth(), self.equiaxed_motion_thirteenth(),
-    #                    self.equiaxed_motion_fourteenth(), self.equiaxed_motion_fifteenth(), self.equiaxed_motion_sixteenth(), self.equiaxed_motion_seventeenth(),
-    #                    self.equiaxed_motion_eighteenth(), self.equiaxed_motion_nineteenth(), self.equiaxed_motion_twentieth(), self.equiaxed_motion_twenty_one(),
-    #                    self.equiaxed_motion_twenty_two()])
-    #     return self.func
+
+    def equiaxed_motion(self):
+        self.func = choice([self.equiaxed_motion_first(), self.equiaxed_motion_second(), self.equiaxed_motion_third(), self.equiaxed_motion_fourth()])
+        return self.func
 
 
     # def ballistics_motion(self):
@@ -165,12 +164,10 @@ class TaskGenerator():
 
 
     def uniform_motion_first(self): # равномерное движение (найти время)
-        first_task_var = ["Тело двигается прямолинейно и равномерно со скоростью ",
-                        "Тело катится прямолинейно и равномерно со скоростью "] # список первой части задачи
-        second_task_var = [" м/с. Пройденное расстояние равное ", " м/с. Оно переместилось на ",
-                        " м/с. Перемещение равно "] # список второй части задачи
+        first_task_var = ["Тело двигается прямолинейно и равномерно со скоростью ", "Тело катится прямолинейно и равномерно со скоростью "] # список первой части задачи
+        second_task_var = [" м/с. Пройденное расстояние равное ", " м/с. Оно переместилось на ", " м/с. Перемещение равно "] # список второй части задачи
         third_task_var = ' м. Найти время движения тела. ' # концовка задачи
-        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо.", "Ответ округлите до 3 знаков после запятой, если это необходимо."]
+        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
         speed = str(choice(speed_var))
         distance = str(choice(distance_var))
         self.text_que = choice(first_task_var) + speed + choice(second_task_var) + distance + third_task_var + choice(fourth_task_var) # возвращает текст задачи
@@ -181,10 +178,9 @@ class TaskGenerator():
 
     def uniform_motion_second(self): # равномерное движение (найти время)
         first_task_var = ["Пройденное телом расстояние равно ", "Тело переместилось на "] # список первой части задачи
-        second_task_var = [" м прямолинейно и равномерно со скоростью ", " м. Скорость тела равна ",
-                        " м. Скорость постоянная и равна "] # список второй части задачи
+        second_task_var = [" м прямолинейно и равномерно со скоростью ", " м. Скорость тела равна ", " м. Скорость постоянная и равна "] # список второй части задачи
         third_task_var = ' м/с. Найти время движения тела. ' # концовка задачи
-        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо.", "Ответ округлите до 3 знаков после запятой, если это необходимо."]
+        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
         distance = str(choice(distance_var))
         speed = str(choice(speed_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed + third_task_var + choice(fourth_task_var) # возвращает текст задачи
@@ -197,7 +193,7 @@ class TaskGenerator():
         first_task_var = ["Тело прошло путь равный ", "Тело переместилось на "] # список первой части задачи
         second_task_var = [" м. Время движения тела равно ", " м за "]  # список второй части задачи
         third_task_var = ' с. Найти скорость движения тела. ' # концовка задачи
-        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо.", "Ответ округлите до 3 знаков после запятой, если это необходимо."]
+        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
         distance = str(choice(distance_var))
         time = str(choice(time_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + time + third_task_var + choice(fourth_task_var) # возвращает текст задачи
@@ -210,7 +206,7 @@ class TaskGenerator():
         first_task_var = ["Время движения тела равно ", "За "] # список первой части задачи
         second_task_var = [" с тело переместилось на ", " с перемещение тела равно "] # список второй части задачи
         third_task_var = ' м. Найти скорость движения тела. ' # концовка задачи
-        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо.", "Ответ округлите до 3 знаков после запятой, если это необходимо."]
+        fourth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
         distance = str(choice(distance_var))
         time = str(choice(time_var))
         self.text_que = choice(first_task_var) + time + choice(second_task_var) + distance + third_task_var + choice(fourth_task_var) # возвращает текст задачи
@@ -220,27 +216,25 @@ class TaskGenerator():
 
 
     def uniform_motion_fifth(self): #равномерное движение (найти расстояние)
-        first_task_var = ["Тело двигается прямолинейно и равномерно со скоростью ",
-                        "Тело катится прямолинейно и равномерно со скоростью "] # список первой части задачи
+        first_task_var = ["Тело двигается прямолинейно и равномерно со скоростью ","Тело катится прямолинейно и равномерно со скоростью "] # список первой части задачи
         second_task_var = [" м/с. Время движения тела равно ", " м/с на протяжении "] # список второй части задачи
         third_task_var = ' с. Найти расстояние пройденное телом. ' # концовка задачи
         time = str(choice(time_var))
         speed = str(choice(speed_var))
         self.text_que = choice(first_task_var) + speed + choice(second_task_var) + time + third_task_var # возвращает текст задачи
-        self.text_ans = round(int(speed) * int(time), 3)
+        self.text_ans = int(speed) * int(time)
         self.unit = "м"
         return [self.text_que, [self.text_ans], [self.unit]]
 
 
     def uniform_motion_sixth(self): #равномерное движение (найти расстояние)
         first_task_var = ["Время движения тела равно ", "За "] # список первой части задачи
-        second_task_var = [" с. Двигаясь прямолинейно и равномерно со скоростью ",
-                        " с. Скорость тела равна "] # список второй части задачи
+        second_task_var = [" с. Двигаясь прямолинейно и равномерно со скоростью ", " с. Скорость тела равна "] # список второй части задачи
         third_task_var = ' м/с. Найти расстояние пройденное телом. ' # концовка задачи
         time = str(choice(time_var))
         speed = str(choice(speed_var))
         self.text_que = choice(first_task_var) + time + choice(second_task_var) + speed + third_task_var # возвращает текст задачи
-        self.text_ans = round(int(speed) * int(time), 3)
+        self.text_ans = int(speed) * int(time)
         self.unit = "м"
         return [self.text_que, [self.text_ans], [self.unit]]
 
@@ -268,51 +262,63 @@ class TaskGenerator():
     #     return choice(first_task_var) + second_task_var + third_task_var + final_task_var # возвращает текст задачи
 
 
-    # def equiaxed_motion_first(self):  # равноускоренное движение (найти ускорение)
-    #     first_task_var = ["Тело начинает движение со скоростью ",
-    #                     "Скорость тела в начале пути равна "] # список первой части задачи
-    #     second_task_var = [" м/с. Время движения тела равно ", " м/с на протяжении "] # список второй части задачи
-    #     third_task_var = [' с. Скорость в этот момент равна ',
-    #                     " с. Конечная скорость равна "] # список третьей части задачи
-    #     fourth_task_var = ' м/с. Найти ускорение тела.'
-    #     return choice(first_task_var) + str(choice(var)) + choice(second_task_var) + str(choice(var)) + choice(
-    #         third_task_var) + str(choice(var)) + fourth_task_var # возвращает текст задачи
+    def equiaxed_motion_first(self): # равноускоренное движение (найти ускорение)
+        first_task_var = ["Тело начинает движение со скоростью ", "Скорость тела в начале пути равна "] # список первой части задачи
+        second_task_var = [" м/с. Время движения тела равно ", " м/с на протяжении "] # список второй части задачи
+        third_task_var = [' с. Скорость в этот момент равна ', " с. Конечная скорость равна "] # список третьей части задачи
+        fourth_task_var = ' м/с. Найти ускорение тела. '
+        fifth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
+        speed1 = str(choice(first_speed_var))
+        e_time = str(choice(e_time_var))
+        speed2 = str(choice(second_speed_var))
+        self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + e_time + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var) # возвращает текст задачи
+        self.text_ans = round((int(speed2) - int(speed1)) / int(e_time), 3)
+        self.unit = "м/с²"
+        return [self.text_que, [self.text_ans], [self.unit]]
 
 
-    # def equiaxed_motion_third(self): # равноускоренное движение (найти ускорение)
-    #     first_task_var = ["Время движения тела равно ", "Время равно"
-    #                     ]  # список первой части задачи
-    #     second_task_var = [" с. Тело начинает движение со скоростью ",
-    #                     " с. Скорость тела в начале пути равна "]  # список второй части задачи
-    #     third_task_var = [' м/с. Скорость в этот момент равна ',
-    #                     " м/с. Конечная скорость равна "]  # список третьей части задачи
-    #     fourth_task_var = ' м/с. Найти ускорение тела.'
-    #     return choice(first_task_var) + str(choice(var)) + choice(second_task_var) + str(choice(var)) + choice(
-    #         third_task_var) + str(choice(var)) + fourth_task_var  # возвращает текст задачи
+    def equiaxed_motion_third(self): # равноускоренное движение (найти ускорение)
+        first_task_var = ["Время движения тела равно ", "Время равно "] # список первой части задачи
+        second_task_var = [" с. Тело начинает движение со скоростью ", " с. Скорость тела в начале пути равна "] # список второй части задачи
+        third_task_var = [' м/с. Скорость в данный момент равна ', " м/с. Конечная скорость равна "] # список третьей части задачи
+        fourth_task_var = ' м/с. Найти ускорение тела. '
+        fifth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
+        e_time = str(choice(time_var))
+        speed1 = str(choice(first_speed_var))
+        speed2 = str(choice(second_speed_var))
+        self.text_que = choice(first_task_var) + e_time + choice(second_task_var) + speed1 + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var) # возвращает текст задачи
+        self.text_ans = round((int(speed2) - int(speed1)) / int(e_time), 3)
+        self.unit = "м/с²"
+        return [self.text_que, [self.text_ans], [self.unit]]
 
 
-    # def equiaxed_motion_second(self):  # равноускоренное движение (найти ускорение)
-    #     first_task_var = ["Тело начинает движение со скоростью ",
-    #                     "Скорость тела в начале пути равна "]  # список первой части задачи
-    #     second_task_var = [" м/с. Расстояние пройденное телом равно ",
-    #                     " м/с. Перемещение равно "]  # список второй части задачи
-    #     third_task_var = [' м. Скорость в этот момент равна ',
-    #                     " м. Конечная скорость равна "]  # список третьей части задачи
-    #     fourth_task_var = ' м/с. Найти ускорение тела.'
-    #     return choice(first_task_var) + str(choice(var)) + choice(second_task_var) + str(choice(var)) + choice(
-    #         third_task_var) + str(choice(var)) + fourth_task_var  # возвращает текст задачи
+    def equiaxed_motion_second(self):  # равноускоренное движение (найти ускорение)
+        first_task_var = ["Тело начинает движение со скоростью ", "Скорость тела в начале пути равна "]  # список первой части задачи
+        second_task_var = [" м/с. Расстояние пройденное телом равно ", " м/с. Перемещение равно "]  # список второй части задачи
+        third_task_var = [' м. Скорость в данный момент равна ', " м. Конечная скорость равна "]  # список третьей части задачи
+        fourth_task_var = ' м/с. Найти ускорение тела. '
+        fifth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
+        speed1 = str(choice(first_speed_var))
+        distance = str(choice(distance_var))
+        speed2 = str(choice(second_speed_var))
+        self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + distance + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var) # возвращает текст задачи
+        self.text_ans = round((int(speed2)**2 - int(speed1)**2) / int(distance) * 2, 3)
+        self.unit = "м/с²"
+        return [self.text_que, [self.text_ans], [self.unit]]
 
 
-    # def equiaxed_motion_fourth(self):  # равноускоренное движение (найти ускорение)
-    #     first_task_var = ["Расстояние пройденное телом равно  ",
-    #                     "Перемещение равно "]  # список первой части задачи
-    #     second_task_var = [" м. Тело начинает движение со скоростью ",
-    #                     " м. Скорость тела в начале пути равна "]  # список второй части задачи
-    #     third_task_var = [' м/с. Скорость в этот момент равна ',
-    #                     " м/с. Конечная скорость равна "]  # список третьей части задачи
-    #     fourth_task_var = ' м/с. Найти ускорение тела.'
-    #     return choice(first_task_var) + str(choice(var)) + choice(second_task_var) + str(choice(var)) + choice(
-    #         third_task_var) + str(choice(var)) + fourth_task_var  # возвращает текст задачи
+    def equiaxed_motion_fourth(self):  # равноускоренное движение (найти ускорение)
+        first_task_var = ["Расстояние пройденное телом равно  ", "Перемещение равно "]  # список первой части задачи
+        second_task_var = [" м. Тело начинает движение со скоростью ", " м. Скорость тела в начале пути равна "]  # список второй части задачи
+        third_task_var = [' м/с. Скорость в данный момент равна ', " м/с. Конечная скорость равна "]  # список третьей части задачи
+        fourth_task_var = ' м/с. Найти ускорение тела.'
+        fifth_task_var = ["Ответ округлите до тысячных, если это необходимо. ", "Ответ округлите до 3 знаков после запятой, если это необходимо. "]
+        distance = str(choice(distance_var))
+        speed1 = str(choice(first_speed_var))
+        speed2 = str(choice(second_speed_var))
+        self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed1 + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var) # возвращает текст задачи
+        self.text_ans = round((int(speed2)**2 - int(speed1)**2) / int(distance) * 2, 3)
+        self.unit = "м/с²"
 
 
     # def equiaxed_motion_fifth(self):  # равноускоренное движение (найти скорость)

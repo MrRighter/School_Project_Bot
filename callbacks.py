@@ -39,6 +39,17 @@ async def callback_query_data(callback_query: types.CallbackQuery, bot): # callb
     elif callback_query.data == "back_from_b_m_phys":
         await callback_query.answer()
         await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=theme_phys_list)
+    elif callback_query.data == "back_from_numbers":
+        index = users.get_user_index(id)
+        if users.List['for_numbers'][index] == "Mechanics_kr" or users.List['for_numbers'][index] == "Kinematics_kr" or users.List['for_numbers'][index] == "Ballistics_kr":
+            await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Доступные темы", reply_markup=theme_phys_list_kr)
+        elif users.List['for_numbers'][index] == "uniform_motion" or users.List['for_numbers'][index] == "equiaxed_motion":
+            await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=k_m_phys_list)
+        elif users.List['for_numbers'][index] == "free_fall_of_bodies" or users.List['for_numbers'][index] == "ballistic_motion":
+            await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=b_m_phys_list)
+    elif callback_query.data == "back_from_export":
+        await callback_query.answer()
+        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
 
 
 # новый предмет
@@ -189,20 +200,3 @@ async def callback_query_data(callback_query: types.CallbackQuery, bot): # callb
         users.set_parametr(id, "export", "send_to_telega_and_pdf")
         await bot.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)
         await fef.send_result(message=callback_query.message)
-
-
-# назад из выбора количества задач
-    elif callback_query.data == "back_from_numbers":
-        index = users.get_user_index(id)
-        if users.List['for_numbers'][index] == "Mechanics_kr" or users.List['for_numbers'][index] == "Kinematics_kr" or users.List['for_numbers'][index] == "Ballistics_kr":
-            await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Доступные темы", reply_markup=theme_phys_list_kr)
-        elif users.List['for_numbers'][index] == "uniform_motion" or users.List['for_numbers'][index] == "equiaxed_motion":
-            await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=k_m_phys_list)
-        elif users.List['for_numbers'][index] == "free_fall_of_bodies" or users.List['for_numbers'][index] == "ballistic_motion":
-            await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите раздел данной темы", reply_markup=b_m_phys_list)
-
-
-# назад из экспорта
-    elif callback_query.data == "back_from_export":
-        await callback_query.answer()
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Выберите нужное количество задач", reply_markup=numbers_list)
