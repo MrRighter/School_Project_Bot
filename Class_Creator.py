@@ -14,8 +14,6 @@ class Creator():
         return res
 
     def function_creator(self, key):
-        #Тип: КР по теме, подготовка к КР, СР, ДЗ
-        #Complexity = key['Complexity']#Сложность: сложно (C), нормально (B), легко (A)
         que_text_result = ""
         ans_text_result = ""
 

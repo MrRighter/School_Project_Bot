@@ -68,7 +68,7 @@ numbers_list.add(InlineKeyboardButton(text="1", callback_data="1"),
 numbers_list.add(InlineKeyboardButton(text="Назад", callback_data="back_from_numbers"))
 
 
-# инлайн кнопки для выбора как отправить готовое задание
+# инлайн кнопки для выбора отправки готового задания
 export_list = InlineKeyboardMarkup(row_width=1)
 export_list.add(InlineKeyboardButton(text="Телеграмм", callback_data="telega"),
                 InlineKeyboardButton(text="PDF", callback_data="pdf"),

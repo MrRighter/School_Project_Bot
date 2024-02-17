@@ -9,7 +9,6 @@ from flet import (
     TextField,
     Checkbox,
     Dropdown,
-    IconButton,
     MainAxisAlignment,
     dropdown,
     RadioGroup,
@@ -17,12 +16,10 @@ from flet import (
     app,
     VerticalDivider,
     Column,
-    FloatingActionButton,
     NavigationRail,
     NavigationRailLabelType,
     Icon,
     NavigationRailDestination,
-    AlertDialog,
 )
 
 Mac = False

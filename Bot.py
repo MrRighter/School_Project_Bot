@@ -20,12 +20,9 @@ dp = Dispatcher(bot)
 @dp.message_handler(commands=['start']) # команда старт
 async def process_start_command(message: types.Message):
     await message.reply(f"Привет, {message.from_user.first_name}!\n"
-                        "Нажми /let_is_go_study, чтобы приступить к решению задач.")
+                        "Нажми на /let_us_go_study, чтобы приступить к решению задач.")
 
-
-@dp.message_handler(commands=['help']) # команда для помощи
-async def process_help_command(message: types.Message):
-    await bot.send_message(message.from_user.id, "ы!")
+                        # f"Нажми на <a href='https://t.me/School_workbook_bot?start=let_us_go_study'>цветной текст</a>, чтобы приступить к решению задач.", parse_mode='HTML')
 
 
 @dp.callback_query_handler() # callback данные

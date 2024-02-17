@@ -12,16 +12,16 @@ class Users():
         try:
             self.List = pd.read_csv('./users.csv')
         except:
-            self.List = pd.DataFrame(columns=['UserID', 'task_type', 'subject', 'theme', 'theme_section', 'number', "export", "for_numbers", "for_export"])
+            self.List = pd.DataFrame(columns=['UserID', 'task_type', 'subject', 'theme', 'theme_section', 'number', 'export', 'for_numbers', 'for_export'])
     def save(self):
         self.List.to_csv('./users.csv')
-    def set_parametr(self,id,parametr,value):
+    def set_parametr(self, id, parametr, value):
         ind = self.List.loc[self.List['UserID']==id].index[0]
         self.List[parametr][ind] = value
-    def check_user(self,id):
+    def check_user(self, id):
         if id not in self.List['UserID'].values:
             users.List.loc[len(users.List.index)] = [id, '', '', '', '', '', '', '', '']
-    def get_user_index(self,id):
+    def get_user_index(self, id):
         return self.List.loc[self.List['UserID']==id].index[0]
 
 users = Users()
@@ -31,32 +31,30 @@ async def send_result(message: types.Message):
     id = message['chat']['id']
     index = users.get_user_index(id)
 
-    try:
-        key = {'Type': users.List['task_type'][index],
-                'Subject': users.List['subject'][index],
-                'Theme': users.List['theme'][index],
-                'Theme_section': users.List['theme_section'][index],
-                "N": users.List['number'][index]}
+    # try:
+    key = {'Type': users.List['task_type'][index],
+            'Subject': users.List['subject'][index],
+            'Theme': users.List['theme'][index],
+            'Theme_section': users.List['theme_section'][index],
+            'N': users.List['number'][index]}
 
-    # https://pythonturbo.ru/kak-propisat-na-python-put-k-fajlu-v-windows-mac-i-linux/
+    path = f'./Файл с задачами.pdf'
 
-        path = f'./Файл с задачами для {message.from_user.full_name}.pdf' # !!!!!!!!!
-
-        if users.List['export'][index] == "send_to_telega":
-            print_text_result = Creator().function_creator(key)
-            await message.answer(text=print_text_result[0])
-            await message.answer(text=print_text_result[1])
-        elif users.List['export'][index] == "send_pdf":
-            print_text_result = Creator().export_task(path, key)
-            await message.answer_document(open(path, "rb"))
-            await message.answer(text=print_text_result[1])
-            os.remove(f"/Users/Kirill/Desktop/School_Project_Bot/{path}") # /путь/к/файлу.расширение
-        elif users.List['export'][index] == "send_to_telega_and_pdf":
-            print_text_result = Creator().export_task(path, key)
-            await message.answer(text=print_text_result[0])
-            await message.answer_document(open(path, "rb"))
-            await message.answer(text=print_text_result[1])
-            os.remove(f"/Users/Kirill/Desktop/School_Project_Bot/{path}") # /путь/к/файлу.расширение
-    except Exception as e:
-        await message.answer(text="Некорректный ввод данных")
-        print(f"Произошла ошибка: {e}")
+    if users.List['export'][index] == "send_to_telega":
+        print_text_result = Creator().function_creator(key)
+        await message.answer(text=print_text_result[0])
+        await message.answer(text=print_text_result[1])
+    elif users.List['export'][index] == "send_pdf":
+        print_text_result = Creator().export_task(path, key)
+        await message.answer_document(open(path, "rb"))
+        await message.answer(text=print_text_result[1])
+        os.remove(f"/Users/Kirill/Desktop/School_Project_Bot/{path}")
+    elif users.List['export'][index] == "send_to_telega_and_pdf":
+        print_text_result = Creator().export_task(path, key)
+        await message.answer(text=print_text_result[0])
+        await message.answer_document(open(path, "rb"))
+        await message.answer(text=print_text_result[1])
+        os.remove(f"/Users/Kirill/Desktop/School_Project_Bot/{path}")
+    # except Exception as e:
+    #     await message.answer(text="Некорректный ввод данных")
+    #     print(f"Произошла ошибка: {e}")
