@@ -107,10 +107,10 @@ class TaskGenerator():
 
 
     def uniform_motion(self):
-        self.func = choice([self.uniform_motion_first(), self.uniform_motion_second(), self.uniform_motion_third(), self.uniform_motion_fourth(),
-                            self.uniform_motion_fifth(), self.uniform_motion_sixth(), self.uniform_motion_seventh()])
+        self.func = choice([self.uniform_motion_seventh(), self.uniform_motion_eighth()])
         return self.func
-
+# self.uniform_motion_first(), self.uniform_motion_second(), self.uniform_motion_third(), self.uniform_motion_fourth(),
+#                             self.uniform_motion_fifth(), self.uniform_motion_sixth(),
 
     def equiaxed_motion(self):
         self.func = choice([self.equiaxed_motion_first(), self.equiaxed_motion_second(), self.equiaxed_motion_third(), self.equiaxed_motion_fourth(),
@@ -139,14 +139,13 @@ class TaskGenerator():
         fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
         hight1 = str(choice(ball_universal_var))
         hight2 = str(choice(ball_universal_var))
+        self.text_que = choice(first_task_var) + hight1 + choice(second_task_var) + hight2 + third_task_var + fourth_task_var + choice(fifth_task_var)
+        self.unit = "м/с"
         if int(hight2) > int(hight1):
-            self.text_que = choice(first_task_var) + hight1 + choice(second_task_var) + hight2 + third_task_var + fourth_task_var + choice(fifth_task_var)
             self.text_ans = round((int(hight2) - int(hight1)) * sqrt(9,8 / (2 * int(hight1))), 3)
         else:
-            hight2 = str(int(hight1) - int(hight2) + int(choice(1, 4)))
-            self.text_que = choice(first_task_var) + hight1 + choice(second_task_var) + hight2 + third_task_var + fourth_task_var + choice(fifth_task_var)
-            self.text_ans = round((int(hight2) - int(hight1)) * sqrt(9,8 / (2 * int(hight1))), 3)
-        self.unit = "м/с"
+            hight22 = str(int(hight1) + randint(1, 4))
+            self.text_ans = round((int(hight22) - int(hight1)) * sqrt(9,8 / (2 * int(hight1))), 3)
         return [self.text_que, [self.text_ans], [self.unit]]
 
 
@@ -266,42 +265,44 @@ class TaskGenerator():
         material_point_arg2 = choice(material_point_args)
         sign = choice(sign_args)
         first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
-        second_task_var = f"х = {str(material_point_arg1)} {sign} {str(material_point_arg2)}t "
+        second_task_var = f"х = {str(material_point_arg1)} {sign} {str(material_point_arg2)}t. "
         final_task_var = 'С какой скоростью перемещается это тело?'
         self.text_que = choice(first_task_var) + second_task_var + final_task_var
-        if sign == "+":
-            self.text_ans = int(material_point_arg2)
-        else:
-            self.text_ans = int(material_point_arg2) * -1
+        self.text_ans = material_point_arg2 if sign == "+" else -material_point_arg2
         self.unit = "м/с"
         return [self.text_que, [self.text_ans], [self.unit]]
 
 
-    # def uniform_motion_eighth(self):
-    #     material_point_arg1 = choice(material_point_args)
-    #     material_point_arg2 = choice(material_point_args)
-    #     material_point_arg3 = choice(material_point_args)
-    #     material_point_arg4 = choice(material_point_args)
-    #     sign1 = choice(sign_args)
-    #     sign2 = choice(sign_args)
-    #     first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
-    #     second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(material_point_arg2)}t, "
-    #     third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(material_point_arg4)} '
-    #     final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
-    #     self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
-    #     if sign1 == "+":
-    #         self.text_ans1 = int(material_point_arg2)
-    #     elif sign2 == "+":
-    #         self.text_ans2 = int(material_point_arg4)
-    #     elif sign1 == "-":
-    #         self.text_ans1 = int(material_point_arg2) * -1
-    #     elif sign2 == "-":
-    #         self.text_ans2 = int(material_point_arg4) * -1
-    #     intermediate_result = (int(material_point_arg3) - int(material_point_arg1)) / (self.text_ans1 - self.text_ans2)
-    #     self.text_ans3 = int(material_point_arg1) + int(material_point_arg2) * int(intermediate_result)
-    #     self.unit1 = "м/с"
-    #     self.unit2 = "м"
-    #     return [self.text_que, [self.text_ans1, self.text_ans2, self.text_ans3], [self.unit1, self.unit1, self.unit2]]
+    def uniform_motion_eighth(self):
+        material_point_arg1 = choice(material_point_args)
+        material_point_arg2 = choice(material_point_args)
+        material_point_arg3 = choice(material_point_args)
+        material_point_arg4 = choice(material_point_args)
+        sign1 = choice(sign_args)
+        sign2 = choice(sign_args)
+        self.text_ans1 = material_point_arg2 if sign1 == "+" else -material_point_arg2
+        self.text_ans2 = material_point_arg4 if sign2 == "+" else -material_point_arg4
+        self.unit1 = "м/с"
+        self.unit2 = "м"
+        if self.text_ans1 > self.text_ans2:
+            first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
+            second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(self.text_ans1)}t, "
+            third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(self.text_ans2)}t. '
+            final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
+            self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
+            intermediate_result = (int(material_point_arg3) - int(material_point_arg1)) / (self.text_ans1 - self.text_ans2)
+            self.text_ans3 = material_point_arg1 + self.text_ans1 * int(intermediate_result)
+            return [self.text_que, [self.text_ans1, self.text_ans2, self.text_ans3], [self.unit1, self.unit1, self.unit2]]
+        else:
+            self.text_ans11 = self.text_ans2 + randint(1, 4)
+            first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
+            second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(self.text_ans11)}t, "
+            third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(material_point_arg4)}t. '
+            final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
+            self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
+            intermediate_result = (int(material_point_arg3) - int(material_point_arg1)) / (self.text_ans11 - self.text_ans2)
+            self.text_ans3 = material_point_arg1 + self.text_ans11 * int(intermediate_result)
+            return [self.text_que, [self.text_ans11, self.text_ans2, self.text_ans3], [self.unit1, self.unit1, self.unit2]]
 
 
     # def uniform_motion_ninth(self):
@@ -314,19 +315,11 @@ class TaskGenerator():
     #     sign2 = choice(sign_args)
     #     first_task_var = ["Движение материальной точки описывается уравнениями ", "Движение тела описывается уравнениями "]
     #     second_task_var = f"y = {str(material_point_arg1)} {sign1} {str(material_point_arg2)}t, "
-    #     third_task_var = f' x = {str(material_point_arg3)} {sign2} {str(material_point_arg4)}t '
+    #     third_task_var = f'x = {str(material_point_arg3)} {sign2} {str(material_point_arg4)}t. '
     #     final_task_var = 'Найти уравнение зависимости y(x).'
     #     self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
-    #     if sign1 == "+":
-    #         self.text_ans1 = int(material_point_arg2)
-    #     elif sign2 == "+":
-    #         self.text_ans2 = int(material_point_arg4)
-    #     elif sign1 == "-":
-    #         self.text_ans1 = int(material_point_arg2) * -1
-    #     elif sign2 == "-":
-    #         self.text_ans2 = int(material_point_arg4) * -1
-    #     eq1 = Eq(material_point_arg1 + self.text_ans1 * t, x)
-    #     eq2 = Eq(material_point_arg3 + self.text_ans2 * t, x)
+    #     eq1 = Eq(material_point_arg1 + (material_point_arg2 if sign1 == "+" else -material_point_arg2) * t, x)
+    #     eq2 = Eq(material_point_arg3 + (material_point_arg4 if sign2 == "+" else -material_point_arg4) * t, x)
     #     solution = solve((eq1, eq2), (x, t))
     #     self.text_ans = solution[x]
     #     self.unit = ""
