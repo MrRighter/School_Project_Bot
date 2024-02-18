@@ -13,31 +13,40 @@ class Creator():
         pdf.output(path)
         return res
 
+    def export_PDF(self, path, text):
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.add_font('Arial', '', './Arial.ttf', uni=True)
+        pdf.set_font('Arial', '', 14)
+        pdf.multi_cell(190, 10, txt=text)
+        pdf.output(path)
+
+
     def function_creator(self, key):
         que_text_result = ""
         ans_text_result = ""
 
-        if key["Type"] == "однотипные задания":
-            if key["Subject"] == "физика":
-                if key["Theme"] == "кинематика":
-                    if key["Theme_section"] == "равномерное движение":
-                        for i in range(int(key["N"])):
-                            que_ans_text = TaskGenerator().uniform_motion()
-                            ans_text_result += f'{i + 1}) Ответ: '
-                            for j, answer in enumerate(que_ans_text[1]):
-                                ans_text_result += f'{answer} {que_ans_text[2][j]}; '
-                            que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
-                            ans_text_result += '\n'
-                        return que_text_result, ans_text_result
-                    elif key["Theme_section"] == "равноускоренное движение":
-                        for i in range(int(key["N"])):
-                            que_ans_text = TaskGenerator().equiaxed_motion()
-                            ans_text_result += f'{i + 1}) Ответ: '
-                            for j, answer in enumerate(que_ans_text[1]):
-                                ans_text_result += f'{answer} {que_ans_text[2][j]}; '
-                            que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
-                            ans_text_result += '\n'
-                        return que_text_result, ans_text_result
+        # if key["Type"] == "однотипные задания":
+        if (key["Subject"] == "физика") or (key["Subject"] == "Физика"):
+            if (key["Theme"] == "кинематика") or (key["Theme"] == "Кинематика"):
+                if (key["Theme_section"] == "равномерное движение") or (key["Theme_section"] == "Равномерное движение"):
+                    for i in range(int(key["N"])):
+                        que_ans_text = TaskGenerator().uniform_motion()
+                        ans_text_result += f'{i + 1}) Ответ: '
+                        for j, answer in enumerate(que_ans_text[1]):
+                            ans_text_result += f'{answer} {que_ans_text[2][j]}; '
+                        que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
+                        ans_text_result += '\n'
+                    return que_text_result, ans_text_result
+                elif (key["Theme_section"] == "равноускоренное движение") or (key["Theme_section"] == "Равноускоренное движение"):
+                    for i in range(int(key["N"])):
+                        que_ans_text = TaskGenerator().equiaxed_motion()
+                        ans_text_result += f'{i + 1}) Ответ: '
+                        for j, answer in enumerate(que_ans_text[1]):
+                            ans_text_result += f'{answer} {que_ans_text[2][j]}; '
+                        que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
+                        ans_text_result += '\n'
+                    return que_text_result, ans_text_result
         #         elif key["Theme"] == "баллистика":
         #             if key["Theme_section"] == "свободное падение тел":
         #                     for i in range(int(key["N"])):

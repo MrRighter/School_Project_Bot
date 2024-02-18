@@ -1,6 +1,8 @@
 import re
 from os import getcwd
 from sys import platform
+from Class_Creator import Creator
+import Final_Executing_func as FEF
 from flet import (
     ElevatedButton,
     Page,
@@ -10,6 +12,7 @@ from flet import (
     TextField,
     Checkbox,
     Dropdown,
+    IconButton,
     MainAxisAlignment,
     dropdown,
     RadioGroup,
@@ -17,10 +20,12 @@ from flet import (
     app,
     VerticalDivider,
     Column,
+    FloatingActionButton,
     NavigationRail,
     NavigationRailLabelType,
     Icon,
     NavigationRailDestination,
+    AlertDialog,
     ScrollMode
 )
 
@@ -45,22 +50,18 @@ class Interface():
         self.splitter = splitter
         self.page = page
         self.selected_index = 0
-        self.ThemsDict = {'Физика': {'Механика': ['МехПодраздел1', 'МехПодраздел2', 'МехПодраздел3'],
-                                     'Кинематика': ['КинПодраздел1', 'КинПодраздел2', 'КинПодраздел3'],
-                                     'Баллистика': ['БалПодраздел1', 'БалПодраздел2', 'БалПодраздел3']
+        self.ThemsDict = {'Физика': {'Динамика': ['Законы ньютона', "Сила упругости"],
+                                     'Кинематика': ["Равномерное движение", "Равноускоренное движение"],
+                                     'Баллистика': ["Свободное падение тел", "Баллистическое движение", ]
                                      },
                           'Математика': {1, 2}, }
 
         self.InputAA = TextField(value='1', visible=False, width=200, label="Количество задач")
         self.Column = Column(scroll=ScrollMode.AUTO, height=300)
+        self.ColumnTextFast = Column(scroll=ScrollMode.AUTO, height=300,width=300)
         self.NumberOfTasks = TextField(on_change=self.example_func, on_submit=self.example_func,
                                        label="Количество задач")
-        self.InputA = Dropdown(
-            label="Количество задач",
-            data='Type',
-            visible=False,
-            # on_change=self.Vita,
-        )
+
         self.ViewGraphs = Checkbox(label="Выбрать подтему?", value=False, on_change=self.Obrab_ViewGraphs,
                                    visible=False)
         self.PDFPROVERKA = Checkbox(label="PDF", value=False, visible=False)
@@ -84,42 +85,20 @@ class Interface():
                 dropdown.Option("Математика"),
             ],
         )
-        self.ChooseFunctionGener = Dropdown(
-            label="Выберите предмет",
-            data='Type',
-            on_change=self.ChooseTemaGener,
-            options=[
-                dropdown.Option("Физика"),
-                dropdown.Option("Математика"),
-            ],
-        )
+
         self.ChooseTemaDropdown = Dropdown(
             label="Выберите тему",
             data='Type',
             visible=False,
             on_change=self.SetChoosePodTemaDropdown,
         )
-        self.ChooseTemaDropdownGener = Dropdown(
-            label="Выберите тему",
-            data='Type',
-            visible=False,
-            on_change=self.SetChoosePodTemaDropdownGener,
-        )
+
         self.ChoosePodTemaDropdown = Dropdown(
             label="Выберите подтему",
             data='Type',
             visible=False,
         )
-        self.ChoosePodTemaDropdownGener = Dropdown(
-            label="Выберите подтему",
-            data='Type',
-            visible=False,
-        )
-        # self.ChoosePodTemaDropdownGener2 = Dropdown(
-        #     label="Выберите подтему",
-        #     data='Type',
-        #     visible=False,
-        # )
+
         self.ON_OFF_Radio = RadioGroup(
             value='СР',
             content=Row(
@@ -136,7 +115,7 @@ class Interface():
         print(e.control)
         if self.ChoosePredmet.value == list(self.ThemsDict.keys())[0]:
             if e.control.value == list(self.ThemsDict['Физика'].keys())[0]:
-                self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Механика'])
+                self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Динамика'])
             elif e.control.value == list(self.ThemsDict['Физика'].keys())[1]:
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
             elif e.control.value == list(self.ThemsDict['Физика'].keys())[2]:
@@ -148,8 +127,8 @@ class Interface():
         print(e.control)
         if self.ChoosePredmet.value == 'Физика':
             # Если выбрана тема1
-            if e.control.value == 'Механика':
-                self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Механика'])
+            if e.control.value == 'Динамика':
+                self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Динамика'])
             elif e.control.value == 'Кинематика':
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
             elif e.control.value == 'Баллистика':
@@ -157,11 +136,11 @@ class Interface():
             self.Column.controls[e.control.key].controls[2].update()
         # тут можно посмотреть как обращаться к отдельным задачам их списка
 
-    def SetInputA(self, e):
-        for num in range(1, 6):
-            self.InputA.options.append(dropdown.Option(num))
-
     def example_func(self, e):
+        self.TXTPROVERKA.visible=True
+        self.TXTPROVERKA.update()
+        self.PDFPROVERKA.visible = True
+        self.PDFPROVERKA.update()
         e.control.value = re.sub("[a-zA-Za-яА-Я]", "", e.control.value)
         e.control.update()
         if e.control.value != '':
@@ -194,17 +173,10 @@ class Interface():
         self.ChooseTemaDropdown.update()
 
     def Add_PhisicsThems(self, object):
-        l = ['Механика', 'Кинематика', 'Баллистика']
+        l = ['Динамика', 'Кинематика', 'Баллистика']
         object.options = []
         for theme in l:
             object.options.append(dropdown.Option(theme))
-
-    def ChooseTemaGener(self, e):
-        self.SetInputA(e)
-        if e.control.value == 'Физика':
-            self.Add_PhisicsThems(self.ChooseTemaDropdownGener)
-        self.ChooseTemaDropdownGener.visible = True
-        self.ChooseTemaDropdownGener.update()
 
     def AddOptions(self, object, names):
         object.options = []
@@ -212,8 +184,8 @@ class Interface():
             object.options.append(dropdown.Option(theme))
 
     def AddPhisicsPodTema(self, object, tema):
-        if tema == 'Механика':
-            self.AddOptions(object, self.ThemsDict['Физика']['Механика'])
+        if tema == 'Динамика':
+            self.AddOptions(object, self.ThemsDict['Физика']['Динамика'])
         elif tema == 'Кинематика':
             self.AddOptions(object, self.ThemsDict['Физика']['Кинематика'])
         elif tema == 'Баллистика':
@@ -230,20 +202,6 @@ class Interface():
         self.TXTPROVERKA.update()
         self.PDFPROVERKA.update()
 
-    def SetChoosePodTemaDropdownGener(self, e):
-        self.AddPhisicsPodTema(self.ChoosePodTemaDropdownGener, e.control.value)
-
-        self.ChoosePodTemaDropdownGener.value = ''
-        self.ChoosePodTemaDropdownGener.update()
-        self.InputA.visible = True
-        self.TXTPROVERKA.visible = True
-        self.PDFPROVERKA.visible = True
-        self.ChoosePodTemaDropdownGener.visible = True
-        self.ChoosePodTemaDropdownGener.update()
-        self.InputA.update()
-        self.TXTPROVERKA.update()
-        self.PDFPROVERKA.update()
-
     def Obrab_ViewGraphs(self, e):
         if e.control.value:
             self.ChoosePodTemaDropdown.visible = True
@@ -256,7 +214,23 @@ class Interface():
         print(self.TXTPROVERKA.value)
         print(self.PDFPROVERKA.value)
         print(self.ON_OFF_Radio.value)
-        pass
+        KEY = {"Subject":self.ChooseFunction.value,
+               'Theme':self.ChooseTemaDropdown.value,
+               'Theme_section':self.ChoosePodTemaDropdown.value,
+               'N':int(self.InputAA.value),
+               'PDF':self.PDFPROVERKA.value,
+               'TXT':self.TXTPROVERKA.value}
+        print(KEY)
+
+        text = FEF.GetTaskText(KEY)
+
+        self.ColumnTextFast.controls = []
+        self.ColumnTextFast.controls.append(Row([Text(value=f'{text}',width=300,height=300)],
+                                                width=300,height=300,scroll=ScrollMode.AUTO))
+        self.ColumnTextFast.update()
+
+
+
 
     def get_menu(self):
         rail = NavigationRail(
@@ -274,11 +248,6 @@ class Interface():
                 NavigationRailDestination(
                     icon_content=Icon(icons.SETTINGS),
                     selected_icon=icons.SETTINGS,
-                    label="Расширенная генерация",
-                ),
-                NavigationRailDestination(
-                    icon_content=Icon(icons.SETTINGS),
-                    selected_icon=icons.SETTINGS,
                     label="Конструктор",
                 ),
             ],
@@ -292,42 +261,29 @@ class Interface():
         row3 = Row([self.ChooseTemaDropdown, self.ViewGraphs], alignment=self.Standartaligment)
         row4 = Row([self.ChoosePodTemaDropdown], alignment=self.Standartaligment)
         row5 = Row([self.InputAA, self.TXTPROVERKA, self.PDFPROVERKA], alignment=self.Standartaligment)
+
         body = Column([Row([Text('Быстрая генерация')]),
                        row1,
                        row2,
                        row3,
                        row4,
                        row5,
-                       ])
-        return body
-
-    def get_Setup2(self):
-        row1 = Row([self.Label, self.ON_OFF_Radio], alignment=self.Standartaligment)
-        row2 = Row([self.ChooseFunctionGener, self.DrowButton], alignment=self.Standartaligment)
-        row3 = Row([self.ChooseTemaDropdownGener], alignment=self.Standartaligment)
-        row4 = Row([self.InputA], alignment=self.Standartaligment)
-        row5 = Row([self.ChoosePodTemaDropdownGener], alignment=self.Standartaligment)
-        row6 = Row([self.TXTPROVERKA, self.PDFPROVERKA], alignment=self.Standartaligment)
-
-        body = Column([Row([Text('Расширенная генерация')]),
-                       row1,
-                       row2,
-                       row3,
-                       row4,
-                       row5,
-                       row6,
+                       self.ColumnTextFast,
                        ])
         return body
 
     def get_Constructor(self):
-        row5 = Row([self.NumberOfTasks], alignment=self.Standartaligment)
-        row1 = Row([self.ChoosePredmet], alignment=self.Standartaligment)
-        # row1 = Row([Text('asadasd')], alignment=self.Standartaligment)
+        row1 = Row([self.Label, self.ON_OFF_Radio], alignment=self.Standartaligment)
+        row2 = Row([self.ChoosePredmet, self.DrowButton], alignment=self.Standartaligment)
+        row3 = Row([self.NumberOfTasks], alignment=self.Standartaligment)
         self.row6 = Row(alignment=self.Standartaligment)
+        row7 = Row([self.TXTPROVERKA, self.PDFPROVERKA], alignment=self.Standartaligment)
 
         body = Column([row1,
-                       row5,
+                       row2,
+                       row3,
                        self.row6,
+                       row7,
                        ])
         return body
 
@@ -335,8 +291,6 @@ class Interface():
         if isinstance(e, str):  # Обработка вызова из класса
             if e == 'Быстрая генерация':
                 return self.get_Setup()
-            elif e == 'Расширенная генерация':
-                return self.get_Setup2()
             elif e == 'Конструктор':
                 return self.get_Constructor()
 
@@ -344,8 +298,6 @@ class Interface():
             if e.control.selected_index == 0:
                 return self.get_Setup()
             elif e.control.selected_index == 1:
-                return self.get_Setup2()
-            elif e.control.selected_index == 2:
                 return self.get_Constructor()
 
     def rebuild(self, e):
@@ -368,8 +320,7 @@ if __name__ == "__main__":
         Window = Interface(page)
         page.window_width = 900
         page.window_height = 860
-        page.theme_mode = 'light'
-        Window.rebuild('Конструктор')
+        Window.rebuild('Быстрая генерация')
         page.window_center()
 
 

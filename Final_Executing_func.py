@@ -58,3 +58,19 @@ async def send_result(message: types.Message):
     # except Exception as e:
     #     await message.answer(text="Некорректный ввод данных")
     #     print(f"Произошла ошибка: {e}")
+def GetTaskText(key):
+    path = f'./Файл с задачами.pdf'
+    print_text_result = Creator().function_creator(key)
+    tasks = print_text_result[0]
+    answers = print_text_result[1]
+    text = tasks + '\n' + answers
+    if key['TXT']:
+        if key['PDF']:
+            Creator().export_PDF(path, text)
+        return text
+    elif key['PDF']:
+        Creator().export_PDF(path, text)
+
+    # except Exception as e:
+    #     await message.answer(text="Некорректный ввод данных")
+    #     print(f"Произошла ошибка: {e}")
