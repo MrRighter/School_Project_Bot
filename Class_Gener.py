@@ -9,6 +9,7 @@ sign_args = ['+', '-']
 speed_var = [i for i in range(5, 36)]
 distance_var = [i for i in range(50, 251)]
 time_var = [i for i in range(5, 46)]
+deg_var = ['30', '45', '60', '90', '0']
 
 e_time_var = [i for i in range(1, 11)]
 acceleration_var = [i for i in range(2, 11)]
@@ -107,10 +108,10 @@ class TaskGenerator():
 
 
     def uniform_motion(self):
-        self.func = choice([self.uniform_motion_seventh(), self.uniform_motion_eighth()])
+        self.func = choice([self.uniform_motion_first(), self.uniform_motion_second(), self.uniform_motion_third(), self.uniform_motion_fourth(),
+                            self.uniform_motion_fifth(), self.uniform_motion_sixth(), self.uniform_motion_seventh(), self.uniform_motion_eighth()])
         return self.func
-# self.uniform_motion_first(), self.uniform_motion_second(), self.uniform_motion_third(), self.uniform_motion_fourth(),
-#                             self.uniform_motion_fifth(), self.uniform_motion_sixth(),
+
 
     def equiaxed_motion(self):
         self.func = choice([self.equiaxed_motion_first(), self.equiaxed_motion_second(), self.equiaxed_motion_third(), self.equiaxed_motion_fourth(),
@@ -140,48 +141,60 @@ class TaskGenerator():
         hight1 = str(choice(ball_universal_var))
         hight2 = str(choice(ball_universal_var))
         self.text_que = choice(first_task_var) + hight1 + choice(second_task_var) + hight2 + third_task_var + fourth_task_var + choice(fifth_task_var)
-        self.unit = "м/с"
-        if int(hight2) > int(hight1):
-            self.text_ans = round((int(hight2) - int(hight1)) * sqrt(9,8 / (2 * int(hight1))), 3)
-        else:
-            hight22 = str(int(hight1) + randint(1, 4))
-            self.text_ans = round((int(hight22) - int(hight1)) * sqrt(9,8 / (2 * int(hight1))), 3)
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.unit = ["м/с"]
+        self.text_ans = [round((abs(int(hight2) - int(hight1))) * sqrt(9,8 / (2 * int(hight1))), 3)]
+        return [self.text_que, self.text_ans, self.unit]
 
 
-    def ballistics_second(self):
-        first_task_var = ["Сколько по времени падает тело, если за последние "]
-        second_task_var = ["с, с начала падения, оно пролетело "]
-        third_task_var =  "м?"
-        time = str(choice(ball_universal_var))
+    # def ballistics_second(self):
+    #     first_task_var = ["Сколько секунд будет падает тело, если за последние "]
+    #     second_task_var = ["с, если с начала падения, оно пролетело "]
+    #     third_task_var =  "м?"
+    #     time = str(choice(ball_universal_var))
+    #     hight = str(choice(ball_universal_var))
+    #     self.text_que = choice(first_task_var) + time + choice(second_task_var) + hight + third_task_var
+    #     self.text_ans = [round(sqrt(2 * int(hight) / 9,8), 3)]
+    #     self.unit = ["с"]
+    #     return [self.text_que, self.text_ans, self.unit]
+
+
+    def ballistics_corner_first(self):
+        first_task_var = ["Начальная скорость тела равна ", "Тело брошено с начальной скоростью ", "Тело начинает движение со скоростью "]
+        second_task_var = ["м/с на некоторой высоте. Через какое время вектор скорости будет направлен по углом ",
+                        "м/с. Считая, что оно находилось на некоторой высоте, определите время, когда вектор скорости будет направлен под углом "]
+        third_task_var = "° к горизонту?"
+        speed = str(choice(speed_var))
+        deg = choice(deg_var)
+        self.text_que = choice(first_task_var) + speed + choice(second_task_var) + deg + third_task_var
+        self.text_ans = [round((2 * int(speed) * sin(int(deg))) / 9,8, 3)]
+        self.unit = ['c']
+        return [self.text_que, self.text_ans, self.unit]
+
+
+    def ballistics_corner_second(self):
+        first_task_var = ['Тело брошено горизонтально с высоты ', "Тело бросили с высоты "]
+        second_task_var = ['м. Определите время полета тела, если оно упало на расстоянии ', "м. Сколько времени летело это тело, если дальность полета равна "]
+        third_task_var = "м от места броска."
         hight = str(choice(ball_universal_var))
-        self.text_que = choice(first_task_var) + time + choice(second_task_var) + hight + third_task_var
-        self.text_ans = round(sqrt(2 * int(hight) / 9,8), 3)
-        self.unit = "с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        distance = str(choice(distance_var))
+        self.text_que = choice(first_task_var) + hight + choice(second_task_var) + distance + third_task_var
+        self.text_ans = [round(sqrt((2 * int(hight)) / 9,8), 3)]
+        self.unit = ['c']
+        return [self.text_que, self.text_ans, self.unit]
 
 
-    # def ballistics_corner_first(self):
-    #     first_task_var = ["Начальная скорость тела равна ", "Тело брошено с начальной скоростью ", "Тело начинает движение со скоростью "]
-    #     second_task_var = ["м/с на некоторой высоте. Через какое время вектор скорости будет направлен по углом ",
-    #                     "м/с. Считая, что оно находилось на некоторой высоте, определите время, когда вектор скорости будет направлен под углом "]
-    #     third_task_var = "° к горизонту?"
-    #     return choice(first_task_var) + str(choice(var)) + choice(second_task_var) + str(choice(var)) + third_task_var
-
-
-    # def ballistics_corner_second(self):
-    #     first_task_var = ['Тело брошено горизонтально с высоты ', "Тело бросили с высоты "]
-    #     second_task_var = ['м. Определите время полета тела, если оно упало на расстоянии ', "м. Сколько времени летело это тело, если дальность полета равна "]
-    #     third_task_var = "м от места броска."
-    #     return choice(first_task_var) + str(choice(var)) + choice(second_task_var) + str(choice(var)) + third_task_var
-
-
-    # def ballistics_corner_third(self):
-    #     first_task_var = ['Тело бросили под углом ', "Угол броска равен "]
-    #     second_task_var = ['°. Высота, с которой бросили это тело равна ', "° с высоты "]
-    #     third_task_var = ['м. Начальная скорость равна ', 'м с начальной скоростью ']
-    #     fourth_task_var = 'м/с. Найти дальность полета тела.'
-    #     return choice(first_task_var) + str(choice(var)) + choice(second_task_var) + str(choice(var)) + choice(third_task_var) + str(choice(var)) + fourth_task_var
+    def ballistics_corner_third(self):
+        first_task_var = ['Тело бросили под углом ', "Угол броска равен "]
+        second_task_var = ['°. Оно падало ', "°. Оно упало за "]
+        third_task_var = ['с. Начальная скорость равна ', 'с с начальной скоростью ']
+        fourth_task_var = 'м/с. Найти дальность полета тела.'
+        deg = choice(deg_var)
+        time = str(choice(ball_universal_var))
+        speed = str(choice(speed_var))
+        self.text_que = choice(first_task_var) + deg + choice(second_task_var) + time + choice(third_task_var) + speed + fourth_task_var
+        self.text_ans = [round(int(speed)*cos(int(deg))*time, 3)]
+        self.unit = ['м']
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_first(self):
@@ -192,9 +205,9 @@ class TaskGenerator():
         speed = str(choice(speed_var))
         distance = str(choice(distance_var))
         self.text_que = choice(first_task_var) + speed + choice(second_task_var) + distance + third_task_var + choice(fourth_task_var)
-        self.text_ans = round(int(distance) / int(speed), 3)
-        self.unit = "с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(distance) / int(speed), 3)]
+        self.unit = ["с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_second(self):
@@ -205,9 +218,9 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         speed = str(choice(speed_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed + third_task_var + choice(fourth_task_var)
-        self.text_ans = round(int(distance) / int(speed), 3)
-        self.unit = "с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(distance) / int(speed), 3)]
+        self.unit = ["с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_third(self):
@@ -218,9 +231,9 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         time = str(choice(time_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + time + third_task_var + choice(fourth_task_var)
-        self.text_ans = round(int(distance) / int(time), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(distance) / int(time), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_fourth(self):
@@ -231,9 +244,9 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         time = str(choice(time_var))
         self.text_que = choice(first_task_var) + time + choice(second_task_var) + distance + third_task_var + choice(fourth_task_var)
-        self.text_ans = round(int(distance) / int(time), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(distance) / int(time), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_fifth(self):
@@ -243,9 +256,9 @@ class TaskGenerator():
         time = str(choice(time_var))
         speed = str(choice(speed_var))
         self.text_que = choice(first_task_var) + speed + choice(second_task_var) + time + third_task_var
-        self.text_ans = int(speed) * int(time)
-        self.unit = "м"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [int(speed) * int(time)]
+        self.unit = ["м"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_sixth(self):
@@ -255,9 +268,9 @@ class TaskGenerator():
         time = str(choice(time_var))
         speed = str(choice(speed_var))
         self.text_que = choice(first_task_var) + time + choice(second_task_var) + speed + third_task_var
-        self.text_ans = int(speed) * int(time)
-        self.unit = "м"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [int(speed) * int(time)]
+        self.unit = ["м"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_seventh(self):
@@ -268,66 +281,58 @@ class TaskGenerator():
         second_task_var = f"х = {str(material_point_arg1)} {sign} {str(material_point_arg2)}t. "
         final_task_var = 'С какой скоростью перемещается это тело?'
         self.text_que = choice(first_task_var) + second_task_var + final_task_var
-        self.text_ans = material_point_arg2 if sign == "+" else -material_point_arg2
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [material_point_arg2 if sign == "+" else -material_point_arg2]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
-    # def uniform_motion_eighth(self):
-    #     material_point_arg1 = choice(material_point_args)
-    #     material_point_arg2 = choice(material_point_args)
-    #     material_point_arg3 = choice(material_point_args)
-    #     material_point_arg4 = choice(material_point_args)
-    #     sign1 = choice(sign_args)
-    #     sign2 = choice(sign_args)
-    #     self.text_ans1 = material_point_arg2 if sign1 == "+" else -material_point_arg2
-    #     print(f"material_point_arg2: {material_point_arg2}, sign1: {sign1}")
-    #     self.text_ans2 = material_point_arg4 if sign2 == "+" else -material_point_arg4
-    #     print(f"material_point_arg4: {material_point_arg4}, sign2: {sign2}")
-    #     self.unit1 = "м/с"
-    #     self.unit2 = "м"
-    #     if self.text_ans1 > self.text_ans2:
-    #         first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
-    #         second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(material_point_arg2)}t, "
-    #         third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(material_point_arg4)}t. '
-    #         final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
-    #         self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
-    #         intermediate_result = (int(material_point_arg3) - int(material_point_arg1)) / (self.text_ans1 - self.text_ans2)
-    #         self.text_ans3 = material_point_arg1 + self.text_ans1 * int(intermediate_result)
-    #         print([self.text_que, [self.text_ans1, self.text_ans2, self.text_ans3], [self.unit1, self.unit1, self.unit2]], "\n")
-    #         return [self.text_que, [self.text_ans1, self.text_ans2, self.text_ans3], [self.unit1, self.unit1, self.unit2]]
-    #     else:
-    #         self.text_ans11 = self.text_ans2 + randint(1, 4)
-    #         first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
-    #         second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(self.text_ans11)}t, "
-    #         third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(material_point_arg4)}t. '
-    #         final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
-    #         self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
-    #         intermediate_result = (int(material_point_arg3) - int(material_point_arg1)) / (self.text_ans11 - self.text_ans2)
-    #         self.text_ans3 = material_point_arg1 + self.text_ans11 * int(intermediate_result)
-    #         print([self.text_que, [self.text_ans11, self.text_ans2, self.text_ans3], [self.unit1, self.unit1, self.unit2]], "\n")
-    #         return [self.text_que, [self.text_ans11, self.text_ans2, self.text_ans3], [self.unit1, self.unit1, self.unit2]]
+    def uniform_motion_eighth(self):
+        material_point_arg1 = choice(material_point_args)
+        material_point_arg2 = choice(material_point_args)
+        material_point_arg3 = choice(material_point_args)
+        material_point_arg4 = choice(material_point_args)
+        sign1 = choice(sign_args)
+        sign2 = choice(sign_args)
+        self.text_ans1 = material_point_arg2
+        self.text_ans2 = material_point_arg4
+        self.text_ans11 = self.text_ans1 if sign1 == "+" else -material_point_arg2
+        self.text_ans21 = self.text_ans2 if sign2 == "+" else -material_point_arg4
+        self.unit1 = "м/с"
+        self.unit2 = "м"
+        first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
+        second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(self.text_ans1)}t, "
+        third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(self.text_ans2)}t. '
+        final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
+        self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
+        intermediate_result = self.text_ans11 - self.text_ans21
+        intermediate_result1 = material_point_arg3 - material_point_arg1
+        intermediate_result2 = intermediate_result1 / intermediate_result
+        self.text_ans3 = round(material_point_arg1 + (self.text_ans11 * intermediate_result2), 3)
+        self.text_ans = [self.text_ans1, self.text_ans2, self.text_ans3]
+        self.unit = [self.unit1, self.unit1, self.unit2]
+        return [self.text_que, self.text_ans, self.unit]
 
 
-    # def uniform_motion_ninth(self):
-    #     x, t = symbols('x t')
-    #     material_point_arg1 = choice(material_point_args)
-    #     material_point_arg2 = choice(material_point_args)
-    #     material_point_arg3 = choice(material_point_args)
-    #     material_point_arg4 = choice(material_point_args)
-    #     sign1 = choice(sign_args)
-    #     sign2 = choice(sign_args)
-    #     first_task_var = ["Движение материальной точки описывается уравнениями ", "Движение тела описывается уравнениями "]
-    #     second_task_var = f"y = {str(material_point_arg1)} {sign1} {str(material_point_arg2)}t, "
-    #     third_task_var = f'x = {str(material_point_arg3)} {sign2} {str(material_point_arg4)}t. '
-    #     final_task_var = 'Найти уравнение зависимости y(x).'
-    #     self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
-    #     eq1 = Eq(material_point_arg1 + (material_point_arg2 if sign1 == "+" else -material_point_arg2) * t, x)
-    #     eq2 = Eq(material_point_arg3 + (material_point_arg4 if sign2 == "+" else -material_point_arg4) * t, x)
-    #     solution = solve((eq1, eq2), (x, t))
-    #     self.text_ans = solution[x]
-    #     self.unit = ""
-    #     return [self.text_que, [self.text_ans], [self.unit]]
+
+    def uniform_motion_ninth(self):
+        x, t = symbols('x t')
+        material_point_arg1 = choice(material_point_args)
+        material_point_arg2 = choice(material_point_args)
+        material_point_arg3 = choice(material_point_args)
+        material_point_arg4 = choice(material_point_args)
+        sign1 = choice(sign_args)
+        sign2 = choice(sign_args)
+        first_task_var = ["Движение материальной точки описывается уравнениями ", "Движение тела описывается уравнениями "]
+        second_task_var = f"y = {str(material_point_arg1)} {sign1} {str(material_point_arg2)}t, "
+        third_task_var = f'x = {str(material_point_arg3)} {sign2} {str(material_point_arg4)}t. '
+        final_task_var = 'Найти уравнение зависимости y(x).'
+        self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
+        eq1 = Eq(material_point_arg1 + (material_point_arg2 if sign1 == "+" else -material_point_arg2) * t, x)
+        eq2 = Eq(material_point_arg3 + (material_point_arg4 if sign2 == "+" else -material_point_arg4) * t, x)
+        solution = solve((eq1, eq2), (x, t))
+        self.text_ans = [solution[x]]
+        self.unit = [""]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_first(self):
@@ -340,9 +345,9 @@ class TaskGenerator():
         e_time = str(choice(e_time_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + e_time + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((int(speed2) - int(speed1)) / int(e_time), 3)
-        self.unit = "м/с²"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round((int(speed2) - int(speed1)) / int(e_time), 3)]
+        self.unit = ["м/с²"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_third(self):
@@ -355,9 +360,9 @@ class TaskGenerator():
         speed1 = str(choice(first_speed_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + e_time + choice(second_task_var) + speed1 + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((int(speed2) - int(speed1)) / int(e_time), 3)
-        self.unit = "м/с²"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round((int(speed2) - int(speed1)) / int(e_time), 3)]
+        self.unit = ["м/с²"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_second(self):
@@ -370,9 +375,9 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + distance + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round(((int(speed2)**2) - (int(speed1)**2)) / (int(distance) * 2), 3)
-        self.unit = "м/с²"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(((int(speed2)**2) - (int(speed1)**2)) / (int(distance) * 2), 3)]
+        self.unit = ["м/с²"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_fourth(self):
@@ -385,9 +390,9 @@ class TaskGenerator():
         speed1 = str(choice(first_speed_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed1 + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round(((int(speed2)**2) - (int(speed1)**2)) / (int(distance) * 2), 3)
-        self.unit = "м/с²"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(((int(speed2)**2) - (int(speed1)**2)) / (int(distance) * 2), 3)]
+        self.unit = ["м/с²"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_fifth(self):
@@ -399,9 +404,9 @@ class TaskGenerator():
         e_time = str(choice(e_time_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + e_time + choice(third_task_var) + acceleration + fourth_task_var
-        self.text_ans = round(int(acceleration) * int(e_time) + int(speed1), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(acceleration) * int(e_time) + int(speed1), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_sixth(self):
@@ -413,9 +418,9 @@ class TaskGenerator():
         speed1 = str(choice(first_speed_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + e_time + choice(second_task_var) + speed1 + choice(third_task_var) + acceleration + fourth_task_var
-        self.text_ans = round(int(acceleration) * int(e_time) + int(speed1), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(acceleration) * int(e_time) + int(speed1), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_seventh(self):
@@ -428,9 +433,9 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + distance + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round(sqrt(int(distance) * int(acceleration) * 2 + (int(speed1)**2)), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(sqrt(int(distance) * int(acceleration) * 2 + (int(speed1)**2)), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_eighth(self):
@@ -442,9 +447,9 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed1 + choice(third_task_var) + acceleration + fourth_task_var
-        self.text_ans = round(sqrt(int(distance) * int(acceleration) * 2 + (int(speed1)**2)), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(sqrt(int(distance) * int(acceleration) * 2 + (int(speed1)**2)), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_ninth(self):
@@ -456,9 +461,9 @@ class TaskGenerator():
         e_time = str(choice(e_time_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + speed2 + choice(second_task_var) + e_time + choice(third_task_var) + acceleration + fourth_task_var
-        self.text_ans = int(speed2) - int(acceleration) * int(e_time)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [int(speed2) - int(acceleration) * int(e_time)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_tenth(self):
@@ -470,9 +475,9 @@ class TaskGenerator():
         speed2 = str(choice(second_speed_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + e_time + choice(second_task_var) + speed2 + choice(third_task_var) + acceleration + fourth_task_var
-        self.text_ans = int(speed2) - int(acceleration) * int(e_time)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [int(speed2) - int(acceleration) * int(e_time)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_eleventh(self):
@@ -485,9 +490,9 @@ class TaskGenerator():
         e_time = str(choice(e_time_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + e_time + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((2 * int(distance) - int(acceleration) * (int(e_time)**2)) / (2 * int(e_time)), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round((2 * int(distance) - int(acceleration) * (int(e_time)**2)) / (2 * int(e_time)), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_twelfth(self):
@@ -500,39 +505,39 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + e_time + choice(second_task_var) + distance + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((2 * int(distance) - int(acceleration) * (int(e_time)**2)) / (2 * int(e_time)), 3)
-        self.unit = "м/с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round((2 * int(distance) - int(acceleration) * (int(e_time)**2)) / (2 * int(e_time)), 3)]
+        self.unit =["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
-    # def equiaxed_motion_thirteenth(self):
-    #     first_task_var = ["Тело переместилось на ", "Тело прошло расстояние равное "]
-    #     second_task_var = [" м. Конечная скорость равна ", " м. С конечной скоростью "]
-    #     third_task_var = [' м/с. Ускорение тела равно ', " м/с с ускорением равным "]
-    #     fourth_task_var = ' м/с². Найти начальную скорость тела.'
-    #     fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
-    #     distance = str(choice(distance_var))
-    #     speed2 = str(choice(second_speed_var))
-    #     acceleration = str(choice(acceleration_var))
-    #     self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed2 + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-    #     self.text_ans = round(sqrt((int(speed2)**2) - ((int(distance) * int(acceleration) * 2))), 3)
-    #     self.unit = "м/с"
-    #     return [self.text_que, [self.text_ans], [self.unit]]
+    def equiaxed_motion_thirteenth(self):
+        first_task_var = ["Тело переместилось на ", "Тело прошло расстояние равное "]
+        second_task_var = [" м. Конечная скорость равна ", " м. С конечной скоростью "]
+        third_task_var = [' м/с. Ускорение тела равно ', " м/с с ускорением равным "]
+        fourth_task_var = ' м/с². Найти начальную скорость тела.'
+        fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
+        distance = str(choice(distance_var))
+        speed2 = str(choice(second_speed_var))
+        acceleration = str(choice(acceleration_var))
+        self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed2 + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
+        self.text_ans = [round(sqrt((int(speed2)**2) - (int(distance) * int(acceleration) * 2)), 3)]
+        self.unit = ["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
-    # def equiaxed_motion_fourteenth(self):
-    #     first_task_var = ["Конечная скорость равна ", "С конечной скоростью "]
-    #     second_task_var = [" м/с. Тело переместилось на ", " м/с. Тело прошло расстояние равное "]
-    #     third_task_var = [' м. Ускорение тела равно ', " м с ускорением равным "]
-    #     fourth_task_var = ' м/с². Найти начальную скорость тела.'
-    #     fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
-    #     speed2 = str(choice(second_speed_var))
-    #     distance = str(choice(distance_var))
-    #     acceleration = str(choice(acceleration_var))
-    #     self.text_que = choice(first_task_var) + speed2 + choice(second_task_var) + distance + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-    #     self.text_ans = round(sqrt((int(speed2)**2) - ((int(distance) * int(acceleration) * 2))), 3)
-    #     self.unit = "м/с"
-    #     return [self.text_que, [self.text_ans], [self.unit]]
+    def equiaxed_motion_fourteenth(self):
+        first_task_var = ["Конечная скорость равна ", "С конечной скоростью "]
+        second_task_var = [" м/с. Тело переместилось на ", " м/с. Тело прошло расстояние равное "]
+        third_task_var = [' м. Ускорение тела равно ', " м с ускорением равным "]
+        fourth_task_var = ' м/с². Найти начальную скорость тела.'
+        fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
+        speed2 = str(choice(second_speed_var))
+        distance = str(choice(distance_var))
+        acceleration = str(choice(acceleration_var))
+        self.text_que = choice(first_task_var) + speed2 + choice(second_task_var) + distance + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
+        self.text_ans = [round(sqrt((int(speed2)**2) - (int(distance) * int(acceleration) * 2)), 3)]
+        self.unit =["м/с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_fifteenth(self):
@@ -545,9 +550,9 @@ class TaskGenerator():
         speed1 = str(choice(first_speed_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + distance + choice(second_task_var) + speed1 + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((sqrt(int(speed1)**2 + 2 * int(acceleration) * int(distance)) - int(speed1)) / int(acceleration), 3)
-        self.unit = "с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round((sqrt(int(speed1)**2 + 2 * int(acceleration) * int(distance)) - int(speed1)) / int(acceleration), 3)]
+        self.unit = ["с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_sixteenth(self):
@@ -560,9 +565,9 @@ class TaskGenerator():
         distance = str(choice(distance_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + distance + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((sqrt(int(speed1)**2 + 2 * int(acceleration) * int(distance)) - int(speed1)) / int(acceleration), 3)
-        self.unit = "с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round((sqrt(int(speed1)**2 + 2 * int(acceleration) * int(distance)) - int(speed1)) / int(acceleration), 3)]
+        self.unit = ["с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_seventeenth(self):
@@ -575,9 +580,9 @@ class TaskGenerator():
         acceleration = str(choice(acceleration_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + acceleration + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((int(speed2) - int(speed1)) / int(acceleration), 3)
-        self.unit = "с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round((int(speed2) - int(speed1)) / int(acceleration), 3)]
+        self.unit = ["с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_eighteenth(self):
@@ -590,9 +595,9 @@ class TaskGenerator():
         speed1 = str(choice(first_speed_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + acceleration + choice(second_task_var) + speed1 + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round((int(speed2) - int(speed1)) / int(acceleration), 3)
-        self.unit = "с"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans =[round((int(speed2) - int(speed1)) / int(acceleration), 3)]
+        self.unit = ["с"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_nineteenth(self):
@@ -605,9 +610,9 @@ class TaskGenerator():
         e_time = str(choice(e_time_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + e_time + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round(int(speed1) * int(e_time) + (int(acceleration) * (int(e_time)**2) / 2), 3)
-        self.unit = "м"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(speed1) * int(e_time) + (int(acceleration) * (int(e_time)**2) / 2), 3)]
+        self.unit = ["м"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_twentieth(self):
@@ -620,9 +625,9 @@ class TaskGenerator():
         speed1 = str(choice(first_speed_var))
         acceleration = str(choice(acceleration_var))
         self.text_que = choice(first_task_var) + e_time + choice(second_task_var) + speed1 + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round(int(speed1) * int(e_time) + (int(acceleration) * (int(e_time)**2) / 2), 3)
-        self.unit = "м"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(int(speed1) * int(e_time) + (int(acceleration) * (int(e_time)**2) / 2), 3)]
+        self.unit = ["м"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_twenty_one(self):
@@ -635,9 +640,9 @@ class TaskGenerator():
         acceleration = str(choice(acceleration_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + speed1 + choice(second_task_var) + acceleration + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round(((int(speed2)**2) - (int(speed1)**2)) / (2 * int(acceleration)), 3)
-        self.unit = "м"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(((int(speed2)**2) - (int(speed1)**2)) / (2 * int(acceleration)), 3)]
+        self.unit = ["м"]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def equiaxed_motion_twenty_two(self):
@@ -650,6 +655,6 @@ class TaskGenerator():
         speed1 = str(choice(first_speed_var))
         speed2 = str(choice(second_speed_var))
         self.text_que = choice(first_task_var) + acceleration + choice(second_task_var) + speed1 + choice(third_task_var) + speed2 + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = round(((int(speed2)**2) - (int(speed1)**2)) / (2 * int(acceleration)), 3)
-        self.unit = "м"
-        return [self.text_que, [self.text_ans], [self.unit]]
+        self.text_ans = [round(((int(speed2)**2) - (int(speed1)**2)) / (2 * int(acceleration)), 3)]
+        self.unit = ["м"]
+        return [self.text_que, self.text_ans, self.unit]
