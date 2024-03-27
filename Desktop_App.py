@@ -1,7 +1,6 @@
 import re
 from os import getcwd
 from sys import platform
-from Class_Creator import Creator
 import Final_Executing_func as FEF
 from flet import (
     ElevatedButton,
@@ -12,7 +11,6 @@ from flet import (
     TextField,
     Checkbox,
     Dropdown,
-    IconButton,
     MainAxisAlignment,
     dropdown,
     RadioGroup,
@@ -20,14 +18,13 @@ from flet import (
     app,
     VerticalDivider,
     Column,
-    FloatingActionButton,
     NavigationRail,
     NavigationRailLabelType,
     Icon,
     NavigationRailDestination,
-    AlertDialog,
     ScrollMode
 )
+
 
 Mac = False
 path = ''
@@ -230,8 +227,6 @@ class Interface():
         self.ColumnTextFast.update()
 
 
-
-
     def get_menu(self):
         rail = NavigationRail(
             selected_index=self.selected_index,
@@ -322,6 +317,5 @@ if __name__ == "__main__":
         page.window_height = 860
         Window.rebuild('Быстрая генерация')
         page.window_center()
-
 
     app(target=main)
