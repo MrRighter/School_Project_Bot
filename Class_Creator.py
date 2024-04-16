@@ -1,4 +1,4 @@
-from Class_Gener_my import *
+from Class_Gener import *
 from fpdf import FPDF
 
 

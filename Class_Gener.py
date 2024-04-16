@@ -109,7 +109,7 @@ class TaskGenerator():
 
     def uniform_motion(self):
         self.func = choice([self.uniform_motion_first, self.uniform_motion_second, self.uniform_motion_third, self.uniform_motion_fourth,
-                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh])
+                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh,self.uniform_motion_eighth])
         return self.func()
 
 
@@ -286,32 +286,37 @@ class TaskGenerator():
         return [self.text_que, self.text_ans, self.unit]
 
 
-    # def uniform_motion_eighth(self):
-    #     material_point_arg1 = choice(material_point_args)
-    #     material_point_arg2 = choice(material_point_args)
-    #     material_point_arg3 = choice(material_point_args)
-    #     material_point_arg4 = choice(material_point_args)
-    #     sign1 = choice(sign_args)
-    #     sign2 = choice(sign_args)
-    #     self.text_ans1 = material_point_arg2
-    #     self.text_ans2 = material_point_arg4
-    #     self.text_ans11 = self.text_ans1 if sign1 == "+" else -material_point_arg2
-    #     self.text_ans21 = self.text_ans2 if sign2 == "+" else -material_point_arg4
-    #     self.unit1 = "м/с"
-    #     self.unit2 = "м"
-    #     first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
-    #     second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(self.text_ans1)}t, "
-    #     third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(self.text_ans2)}t. '
-    #     final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
-    #     self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
-    #     intermediate_result = self.text_ans11 - self.text_ans21
-    #     intermediate_result1 = material_point_arg3 - material_point_arg1
-    #     intermediate_result2 = intermediate_result1 / intermediate_result
-    #     self.text_ans3 = round(material_point_arg1 + (self.text_ans11 * intermediate_result2), 3)
-    #     self.text_ans = [self.text_ans1, self.text_ans2, self.text_ans3]
-    #     self.unit = [self.unit1, self.unit1, self.unit2]
-    #     return [self.text_que, self.text_ans, self.unit]
-
+    def uniform_motion_eighth(self):
+        material_point_arg1 = choice(material_point_args)
+        material_point_arg2 = choice(material_point_args)
+        material_point_arg3 = choice(material_point_args)
+        material_point_arg4 = choice(material_point_args)
+        sign1 = choice(sign_args)
+        sign2 = choice(sign_args)
+        self.text_ans1 = material_point_arg2
+        self.text_ans2 = material_point_arg4
+        self.text_ans11 = self.text_ans1 if sign1 == "+" else -material_point_arg2
+        self.text_ans21 = self.text_ans2 if sign2 == "+" else -material_point_arg4
+        self.unit1 = "м/с"
+        self.unit2 = "м"
+        if self.text_ans21 == self.text_ans11:
+            self.text_ans21 += 1
+            if sign2 == '+':
+                self.text_ans2 += 1
+            else:
+                self.text_ans2 -= 1
+        first_task_var = ["Движение материально точки описывается уравнением ", "Движение тела описывается уравнением "]
+        second_task_var = f"х1 = {str(material_point_arg1)} {sign1} {str(self.text_ans1)}t, "
+        third_task_var = f'а движение второго тела уравнением х2 = {str(material_point_arg3)} {sign2} {str(self.text_ans2)}t. '
+        final_task_var = 'С какой скоростью перемещаются эти точки и где они встретятся?'
+        self.text_que = choice(first_task_var) + second_task_var + third_task_var + final_task_var
+        intermediate_result = self.text_ans11 - self.text_ans21
+        intermediate_result1 = material_point_arg3 - material_point_arg1
+        intermediate_result2 = intermediate_result1 / intermediate_result
+        text_ans3 = round(material_point_arg1 + (self.text_ans11 * intermediate_result2), 3)
+        self.text_ans = [self.text_ans11, self.text_ans21, text_ans3]
+        self.unit = [self.unit1, self.unit1, self.unit2]
+        return [self.text_que, self.text_ans, self.unit]
 
 
     def uniform_motion_ninth(self):
