@@ -22,8 +22,6 @@ async def process_start_command(message: types.Message):
     await message.reply(f"Привет, {message.from_user.first_name}!\n"
                         "Нажми на /let_us_go_study, чтобы приступить к решению задач.")
 
-                        # f"Нажми на <a href='https://t.me/School_workbook_bot?start=let_us_go_study'>цветной текст</a>, чтобы приступить к решению задач.", parse_mode='HTML')
-
 
 @dp.callback_query_handler() # callback данные
 async def handle_callback_query(callback_query: types.CallbackQuery):
