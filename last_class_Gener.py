@@ -137,17 +137,17 @@
 #         first_task_var = ["Тело свободно падает с высоты ", "Высота падения одного тела равна "]
 #         second_task_var = ["м, одновременно с ним другое тело начинает падать с высоты ", "м. Высота падения другого тела равна "]
 #         third_task_var = 'м. Какой должна быть начальная скорость второго тела, чтобы оба тела упали одновременно? '
-#         fourth_task_var = 'Ускорение свободного падения взять 9,8 м/с². '
+#         fourth_task_var = 'Ускорение свободного падения взять 10 м/с². '
 #         fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
 #         hight1 = str(choice(ball_universal_var))
 #         hight2 = str(choice(ball_universal_var))
 #         self.text_que = choice(first_task_var) + hight1 + choice(second_task_var) + hight2 + third_task_var + fourth_task_var + choice(fifth_task_var)
 #         self.unit = "м/с"
 #         if int(hight2) > int(hight1):
-#             self.text_ans = round((int(hight2) - int(hight1)) * sqrt(9,8 / (2 * int(hight1))), 3)
+#             self.text_ans = round((int(hight2) - int(hight1)) * sqrt(10 / (2 * int(hight1))), 3)
 #         else:
 #             hight22 = str(int(hight1) + randint(1, 4))
-#             self.text_ans = round((int(hight22) - int(hight1)) * sqrt(9,8 / (2 * int(hight1))), 3)
+#             self.text_ans = round((int(hight22) - int(hight1)) * sqrt(10 / (2 * int(hight1))), 3)
 #         return [self.text_que, [self.text_ans], [self.unit]]
 
 
@@ -158,7 +158,7 @@
 #         time = str(choice(ball_universal_var))
 #         hight = str(choice(ball_universal_var))
 #         self.text_que = choice(first_task_var) + time + choice(second_task_var) + hight + third_task_var
-#         self.text_ans = round(sqrt(2 * int(hight) / 9,8), 3)
+#         self.text_ans = round(sqrt(2 * int(hight) / 10), 3)
 #         self.unit = "с"
 #         return [self.text_que, [self.text_ans], [self.unit]]
 

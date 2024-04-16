@@ -3,8 +3,8 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # инлайн кнопки для выбора вида работы
 task_type_list = InlineKeyboardMarkup(row_width=1)
-task_type_list.add(InlineKeyboardButton(text="Однотипные задачи", callback_data="single_tasks"),
-                   InlineKeyboardButton(text="Контрольная работа", callback_data="test_work"))
+task_type_list.add(InlineKeyboardButton(text="Однотипные задачи", callback_data="single_tasks"))
+                #    InlineKeyboardButton(text="Контрольная работа", callback_data="test_work"))
 
 
 # инлайн кнопки для предметов

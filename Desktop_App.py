@@ -47,11 +47,9 @@ class Interface():
         self.splitter = splitter
         self.page = page
         self.selected_index = 0
-        self.ThemsDict = {'Физика': {'Динамика': ['Законы ньютона', "Сила упругости"],
-                                     'Кинематика': ["Равномерное движение", "Равноускоренное движение"],
+        self.ThemsDict = {'Физика': {'Кинематика': ["Равномерное движение", "Равноускоренное движение"],
                                      'Баллистика': ["Свободное падение тел", "Баллистическое движение", ]
-                                     },
-                          'Математика': {1, 2}, }
+                                     }}
 
         self.InputAA = TextField(value='1', visible=False, width=200, label="Количество задач")
         self.Column = Column(scroll=ScrollMode.AUTO, height=300)
@@ -69,17 +67,14 @@ class Interface():
             data='Type',
             on_change=self.ChooseTema,
             options=[
-                dropdown.Option("Физика"),
-                dropdown.Option("Математика"),
+                dropdown.Option("Физика")
             ],
         )
         self.ChoosePredmet = Dropdown(
             label="Выберите предмет",
             data='Type',
-            # on_change=self.ChooseTema,
             options=[
-                dropdown.Option("Физика"),
-                dropdown.Option("Математика"),
+                dropdown.Option("Физика")
             ],
         )
 
@@ -111,9 +106,7 @@ class Interface():
     def CorrectTheme(self, e):
         print(e.control)
         if self.ChoosePredmet.value == list(self.ThemsDict.keys())[0]:
-            if e.control.value == list(self.ThemsDict['Физика'].keys())[0]:
-                self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Динамика'])
-            elif e.control.value == list(self.ThemsDict['Физика'].keys())[1]:
+            if e.control.value == list(self.ThemsDict['Физика'].keys())[1]:
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
             elif e.control.value == list(self.ThemsDict['Физика'].keys())[2]:
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Баллистика'])
@@ -124,9 +117,7 @@ class Interface():
         print(e.control)
         if self.ChoosePredmet.value == 'Физика':
             # Если выбрана тема1
-            if e.control.value == 'Динамика':
-                self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Динамика'])
-            elif e.control.value == 'Кинематика':
+            if e.control.value == 'Кинематика':
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
             elif e.control.value == 'Баллистика':
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Баллистика'])
@@ -170,7 +161,7 @@ class Interface():
         self.ChooseTemaDropdown.update()
 
     def Add_PhisicsThems(self, object):
-        l = ['Динамика', 'Кинематика', 'Баллистика']
+        l = ['Кинематика', 'Баллистика']
         object.options = []
         for theme in l:
             object.options.append(dropdown.Option(theme))
@@ -181,9 +172,7 @@ class Interface():
             object.options.append(dropdown.Option(theme))
 
     def AddPhisicsPodTema(self, object, tema):
-        if tema == 'Динамика':
-            self.AddOptions(object, self.ThemsDict['Физика']['Динамика'])
-        elif tema == 'Кинематика':
+        if tema == 'Кинематика':
             self.AddOptions(object, self.ThemsDict['Физика']['Кинематика'])
         elif tema == 'Баллистика':
             self.AddOptions(object, self.ThemsDict['Физика']['Баллистика'])
@@ -207,17 +196,12 @@ class Interface():
         self.ChoosePodTemaDropdown.update()
 
     def DrowSimplePlot(self, e):
-        print('Создай меня')
-        print(self.TXTPROVERKA.value)
-        print(self.PDFPROVERKA.value)
-        print(self.ON_OFF_Radio.value)
         KEY = {"Subject":self.ChooseFunction.value,
                'Theme':self.ChooseTemaDropdown.value,
                'Theme_section':self.ChoosePodTemaDropdown.value,
                'N':int(self.InputAA.value),
                'PDF':self.PDFPROVERKA.value,
                'TXT':self.TXTPROVERKA.value}
-        print(KEY)
 
         text = FEF.GetTaskText(KEY)
 
