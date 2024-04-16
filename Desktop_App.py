@@ -51,13 +51,13 @@ class Interface():
                                      'Баллистика': ["Свободное падение тел", "Баллистическое движение", ]
                                      }}
 
-        self.InputAA = TextField(value='1', visible=False, width=200, label="Количество задач")
+        self.InputAA = TextField(value='1', visible=False, width=200, label="Количество задач (от 1 до 2)")
         self.Column = Column(scroll=ScrollMode.AUTO, height=300)
         self.ColumnTextFast = Column(scroll=ScrollMode.AUTO, height=300,width=300)
         self.NumberOfTasks = TextField(on_change=self.example_func, on_submit=self.example_func,
                                        label="Количество задач")
 
-        self.ViewGraphs = Checkbox(label="Выбрать подтему?", value=False, on_change=self.Obrab_ViewGraphs,
+        self.ViewGraphs = Checkbox(label="Выбрать тему?", value=False, on_change=self.Obrab_ViewGraphs,
                                    visible=False)
         self.PDFPROVERKA = Checkbox(label="PDF", value=False, visible=False)
         self.TXTPROVERKA = Checkbox(label="TXT", value=True, visible=False)
@@ -79,14 +79,14 @@ class Interface():
         )
 
         self.ChooseTemaDropdown = Dropdown(
-            label="Выберите тему",
+            label="Выберите раздел",
             data='Type',
             visible=False,
             on_change=self.SetChoosePodTemaDropdown,
         )
 
         self.ChoosePodTemaDropdown = Dropdown(
-            label="Выберите подтему",
+            label="Выберите тему",
             data='Type',
             visible=False,
         )
@@ -106,9 +106,9 @@ class Interface():
     def CorrectTheme(self, e):
         print(e.control)
         if self.ChoosePredmet.value == list(self.ThemsDict.keys())[0]:
-            if e.control.value == list(self.ThemsDict['Физика'].keys())[1]:
+            if e.control.value == list(self.ThemsDict['Физика'].keys())[0]:
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
-            elif e.control.value == list(self.ThemsDict['Физика'].keys())[2]:
+            elif e.control.value == list(self.ThemsDict['Физика'].keys())[1]:
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Баллистика'])
             self.Column.controls[e.control.key].controls[2].update()
         pass
@@ -125,10 +125,10 @@ class Interface():
         # тут можно посмотреть как обращаться к отдельным задачам их списка
 
     def example_func(self, e):
-        self.TXTPROVERKA.visible=True
-        self.TXTPROVERKA.update()
-        self.PDFPROVERKA.visible = True
-        self.PDFPROVERKA.update()
+        # self.TXTPROVERKA.visible=True
+        # self.TXTPROVERKA.update()
+        # self.PDFPROVERKA.visible = True
+        # self.PDFPROVERKA.update()
         e.control.value = re.sub("[a-zA-Za-яА-Я]", "", e.control.value)
         e.control.update()
         if e.control.value != '':
@@ -138,7 +138,7 @@ class Interface():
                     self.Column.controls.append(Row([Text(f'{i}'),
                                                      Dropdown(label='Раздел', width=200, on_change=self.CorrectTheme,
                                                               key=i - 1),
-                                                     Dropdown(label='Раздел', width=200, on_change=self.CorrectPodTheme,
+                                                     Dropdown(label='Тема', width=200, on_change=self.CorrectPodTheme,
                                                               key=i - 1),
                                                      ]))
                     self.Add_PhisicsThems(self.Column.controls[i - 1].controls[1])
@@ -155,8 +155,8 @@ class Interface():
     def ChooseTema(self, e):
         if e.control.value == 'Физика':
             self.AddOptions(self.ChooseTemaDropdown, list(self.ThemsDict['Физика'].keys()))
-        self.ViewGraphs.visible = True
-        self.ViewGraphs.update()
+        # self.ViewGraphs.visible = True
+        # self.ViewGraphs.update()
         self.ChooseTemaDropdown.visible = True
         self.ChooseTemaDropdown.update()
 
@@ -180,28 +180,31 @@ class Interface():
     def SetChoosePodTemaDropdown(self, e):
         self.AddPhisicsPodTema(self.ChoosePodTemaDropdown, e.control.value)
         self.ChoosePodTemaDropdown.value = ''
+        self.ChoosePodTemaDropdown.visible=True
         self.ChoosePodTemaDropdown.update()
         self.InputAA.visible = True
-        self.TXTPROVERKA.visible = True
-        self.PDFPROVERKA.visible = True
+        # self.TXTPROVERKA.visible = True
+        # self.PDFPROVERKA.visible = True
         self.InputAA.update()
-        self.TXTPROVERKA.update()
-        self.PDFPROVERKA.update()
+        # self.TXTPROVERKA.update()
+        # self.PDFPROVERKA.update()
 
     def Obrab_ViewGraphs(self, e):
-        if e.control.value:
-            self.ChoosePodTemaDropdown.visible = True
-        else:
-            self.ChoosePodTemaDropdown.visible = False
-        self.ChoosePodTemaDropdown.update()
+        pass
+    #     if e.control.value:
+    #         self.ChoosePodTemaDropdown.visible = True
+    #     else:
+    #         self.ChoosePodTemaDropdown.visible = False
+    #     self.ChoosePodTemaDropdown.update()
 
     def DrowSimplePlot(self, e):
         KEY = {"Subject":self.ChooseFunction.value,
                'Theme':self.ChooseTemaDropdown.value,
                'Theme_section':self.ChoosePodTemaDropdown.value,
                'N':int(self.InputAA.value),
-               'PDF':self.PDFPROVERKA.value,
-               'TXT':self.TXTPROVERKA.value}
+               # 'PDF':self.PDFPROVERKA.value,
+               # 'TXT':self.TXTPROVERKA.value
+               }
 
         text = FEF.GetTaskText(KEY)
 

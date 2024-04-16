@@ -66,9 +66,4 @@ def GetTaskText(key):
     tasks = print_text_result[0]
     answers = print_text_result[1]
     text = tasks + '\n' + answers
-    if key['TXT']:
-        if key['PDF']:
-            Creator().export_PDF(path, text)
-        return text
-    elif key['PDF']:
-        Creator().export_PDF(path, text)
+    return text
