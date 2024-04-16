@@ -1,7 +1,7 @@
 import re
 from os import getcwd
 from sys import platform
-import Final_Executing_func as FEF
+import Final_Executing_func_2 as FEF
 from flet import (
     ElevatedButton,
     Page,
@@ -125,8 +125,8 @@ class Interface():
         # тут можно посмотреть как обращаться к отдельным задачам их списка
 
     def example_func(self, e):
-        self.TXTPROVERKA.visible=True
-        self.TXTPROVERKA.update()
+        # self.TXTPROVERKA.visible=True
+        # self.TXTPROVERKA.update()
         # self.PDFPROVERKA.visible = True
         # self.PDFPROVERKA.update()
         e.control.value = re.sub("[a-zA-Za-яА-Я]", "", e.control.value)
@@ -155,8 +155,8 @@ class Interface():
     def ChooseTema(self, e):
         if e.control.value == 'Физика':
             self.AddOptions(self.ChooseTemaDropdown, list(self.ThemsDict['Физика'].keys()))
-        self.ViewGraphs.visible = True
-        self.ViewGraphs.update()
+        # self.ViewGraphs.visible = True
+        # self.ViewGraphs.update()
         self.ChooseTemaDropdown.visible = True
         self.ChooseTemaDropdown.update()
 
@@ -180,20 +180,22 @@ class Interface():
     def SetChoosePodTemaDropdown(self, e):
         self.AddPhisicsPodTema(self.ChoosePodTemaDropdown, e.control.value)
         self.ChoosePodTemaDropdown.value = ''
+        self.ChoosePodTemaDropdown.visible=True
         self.ChoosePodTemaDropdown.update()
         self.InputAA.visible = True
-        self.TXTPROVERKA.visible = True
+        # self.TXTPROVERKA.visible = True
         # self.PDFPROVERKA.visible = True
         self.InputAA.update()
-        self.TXTPROVERKA.update()
+        # self.TXTPROVERKA.update()
         # self.PDFPROVERKA.update()
 
     def Obrab_ViewGraphs(self, e):
-        if e.control.value:
-            self.ChoosePodTemaDropdown.visible = True
-        else:
-            self.ChoosePodTemaDropdown.visible = False
-        self.ChoosePodTemaDropdown.update()
+        pass
+    #     if e.control.value:
+    #         self.ChoosePodTemaDropdown.visible = True
+    #     else:
+    #         self.ChoosePodTemaDropdown.visible = False
+    #     self.ChoosePodTemaDropdown.update()
 
     def DrowSimplePlot(self, e):
         KEY = {"Subject":self.ChooseFunction.value,
@@ -201,7 +203,8 @@ class Interface():
                'Theme_section':self.ChoosePodTemaDropdown.value,
                'N':int(self.InputAA.value),
                # 'PDF':self.PDFPROVERKA.value,
-               'TXT':self.TXTPROVERKA.value}
+               # 'TXT':self.TXTPROVERKA.value
+               }
 
         text = FEF.GetTaskText(KEY)
 
