@@ -1,7 +1,7 @@
 import re
 from os import getcwd
 from sys import platform
-import Final_Executing_func as FEF
+
 from flet import (
     ElevatedButton,
     Page,
@@ -24,6 +24,8 @@ from flet import (
     NavigationRailDestination,
     ScrollMode
 )
+
+import Final_Executing_func as FEF
 
 
 Mac = False
@@ -51,7 +53,8 @@ class Interface():
                                      'Баллистика': ["Свободное падение тел", "Баллистическое движение", ]
                                      }}
 
-        self.InputAA = TextField(value='1', visible=False, width=200, label="Количество задач (от 1 до 2)")
+        self.InputAA = TextField(value='1', visible=False, width=200, label="Количество задач")
+        self.InputAAC = TextField(value='1', visible=False, width=200, label="Количество задач")
         self.Column = Column(scroll=ScrollMode.AUTO, height=300)
         self.ColumnTextFast = Column(scroll=ScrollMode.AUTO, height=300,width=300)
         self.NumberOfTasks = TextField(on_change=self.example_func, on_submit=self.example_func,
@@ -101,10 +104,11 @@ class Interface():
             )
         )
         self.DrowButton = ElevatedButton('Составить', on_click=self.DrowSimplePlot)
+        self.DrowButtonC = ElevatedButton('Составить', on_click=self.DrowSimplePlotC)
         self.Label = Text('Выбор работы:  ', visible=True)
 
     def CorrectTheme(self, e):
-        print(e.control)
+        self.R = e.control.value
         if self.ChoosePredmet.value == list(self.ThemsDict.keys())[0]:
             if e.control.value == list(self.ThemsDict['Физика'].keys())[0]:
                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
@@ -114,7 +118,7 @@ class Interface():
         pass
 
     def CorrectPodTheme(self, e):
-        print(e.control)
+        self.T = e.control.value
         if self.ChoosePredmet.value == 'Физика':
             # Если выбрана тема1
             if e.control.value == 'Кинематика':
@@ -213,6 +217,21 @@ class Interface():
                                                 width=300,height=300,scroll=ScrollMode.AUTO))
         self.ColumnTextFast.update()
 
+    def DrowSimplePlotC(self, e):
+        KEY = {"Subject":self.ChoosePredmet.value,
+               'Theme':self.R,
+               'Theme_section':self.T,
+               'N':int(self.InputAAC.value),
+               # 'PDF':self.PDFPROVERKA.value,
+               # 'TXT':self.TXTPROVERKA.value
+               }
+        text = FEF.GetTaskText(KEY)
+        self.ColumnTextFast.controls = []
+        self.ColumnTextFast.controls.append(Row([Text(value=f'{text}',width=300,height=300)],
+                                                width=300,height=300,scroll=ScrollMode.AUTO))
+        self.ColumnTextFast.update()
+
+
 
     def get_menu(self):
         rail = NavigationRail(
@@ -256,7 +275,7 @@ class Interface():
 
     def get_Constructor(self):
         row1 = Row([self.Label, self.ON_OFF_Radio], alignment=self.Standartaligment)
-        row2 = Row([self.ChoosePredmet, self.DrowButton], alignment=self.Standartaligment)
+        row2 = Row([self.ChoosePredmet, self.DrowButtonC], alignment=self.Standartaligment)
         row3 = Row([self.NumberOfTasks], alignment=self.Standartaligment)
         self.row6 = Row(alignment=self.Standartaligment)
         row7 = Row([self.TXTPROVERKA, self.PDFPROVERKA], alignment=self.Standartaligment)
@@ -266,6 +285,7 @@ class Interface():
                        row3,
                        self.row6,
                        row7,
+                       self.ColumnTextFast,
                        ])
         return body
 
