@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 import callbacks as call
 from callbacks import *
+import User_logger as ul
+from User_logger import *
 
 if os.path.exists(".env"):
     load_dotenv()
@@ -21,6 +23,7 @@ dp = Dispatcher(bot)
 async def process_start_command(message: types.Message):
     await message.reply(f"Привет, {message.from_user.first_name}!\n"
                         "Нажми на /let_us_go_study, чтобы приступить к решению задач.")
+    await ul.get_user_info(message, bot)
 
 
 @dp.callback_query_handler() # callback данные
