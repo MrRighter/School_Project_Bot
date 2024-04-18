@@ -43,17 +43,17 @@ async def send_result(message: types.Message):
         if users.List['export'][index] == "send_to_telega":
             print_text_result = Creator().function_creator(key)
             await message.answer(text=print_text_result[0])
-            await message.answer(text=print_text_result[1])
+            await message.answer(text=print_text_result[1], parse_mode=types.ParseMode.HTML)
         elif users.List['export'][index] == "send_pdf":
             print_text_result = Creator().export_task(path, key)
             await message.answer_document(open(path, "rb"))
-            await message.answer(text=print_text_result[1])
+            await message.answer(text=print_text_result[1], parse_mode=types.ParseMode.HTML)
             os.remove(f"/Users/Kirill/Desktop/School_Project_Bot/{path}")
         elif users.List['export'][index] == "send_to_telega_and_pdf":
             print_text_result = Creator().export_task(path, key)
             await message.answer(text=print_text_result[0])
             await message.answer_document(open(path, "rb"))
-            await message.answer(text=print_text_result[1])
+            await message.answer(text=print_text_result[1], parse_mode=types.ParseMode.HTML)
             os.remove(f"/Users/Kirill/Desktop/School_Project_Bot/{path}")
     except Exception as e:
         await message.answer(text="Извините, произошла неизвестная ошибка.")

@@ -34,7 +34,7 @@ class Creator():
                         que_ans_text = TaskGenerator().uniform_motion()
                         ans_text_result += f'{i + 1}) Ответ: '
                         for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'{answer} {que_ans_text[2][j]}; '
+                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
                         que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
                         ans_text_result += '\n'
                     return que_text_result, ans_text_result
@@ -43,7 +43,7 @@ class Creator():
                         que_ans_text = TaskGenerator().equiaxed_motion()
                         ans_text_result += f'{i + 1}) Ответ: '
                         for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'{answer} {que_ans_text[2][j]}; '
+                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
                         que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
                         ans_text_result += '\n'
                     return que_text_result, ans_text_result
@@ -53,7 +53,7 @@ class Creator():
                         que_ans_text = TaskGenerator().ballistics_motion()
                         ans_text_result += f'{i + 1}) Ответ: '
                         for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'{answer} {que_ans_text[2][j]}; '
+                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
                         que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
                         ans_text_result += '\n'
                     return que_text_result, ans_text_result
@@ -62,7 +62,7 @@ class Creator():
                         que_ans_text = TaskGenerator().ballistics_corner_motion()
                         ans_text_result += f'{i + 1}) Ответ: '
                         for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'{answer} {que_ans_text[2][j]}; '
+                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
                         que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
                         ans_text_result += '\n'
                     return que_text_result, ans_text_result

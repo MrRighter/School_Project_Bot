@@ -8,6 +8,7 @@ from callbacks import *
 import User_logger as ul
 from User_logger import *
 
+
 if os.path.exists(".env"):
     load_dotenv()
     print("Environment variables loaded successfully!")

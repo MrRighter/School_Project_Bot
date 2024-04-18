@@ -78,26 +78,31 @@ class TaskGenerator():
 
     def phis_kr_mechanics(self):
         self.func = choice([self.uniform_motion_first, self.uniform_motion_second, self.uniform_motion_third, self.uniform_motion_fourth,
-                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh,
-                            self.uniform_motion_ninth, self.equiaxed_motion_first, self.equiaxed_motion_second, self.equiaxed_motion_third,
-                            self.equiaxed_motion_fourth, self.equiaxed_motion_fifth, self.equiaxed_motion_sixth, self.equiaxed_motion_seventh,
-                            self.equiaxed_motion_eighth, self.equiaxed_motion_ninth, self.equiaxed_motion_tenth, self.equiaxed_motion_eleventh,
-                            self.equiaxed_motion_twelfth, self.equiaxed_motion_thirteenth, self.equiaxed_motion_fourteenth, self.equiaxed_motion_fifteenth,
-                            self.equiaxed_motion_sixteenth, self.equiaxed_motion_seventeenth, self.equiaxed_motion_eighteenth, self.equiaxed_motion_nineteenth,
-                            self.equiaxed_motion_twelfth, self.equiaxed_motion_twenty_one, self.equiaxed_motion_twenty_two, self.ballistics_first,
-                            self.ballistics_corner_first, self.ballistics_corner_second, self.ballistics_corner_third])
+                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh,self.uniform_motion_eighth,
+                            self.uniform_motion_ninth,
+                            self.equiaxed_motion_first, self.equiaxed_motion_second, self.equiaxed_motion_third, self.equiaxed_motion_fourth,
+                            self.equiaxed_motion_fifth, self.equiaxed_motion_sixth, self.equiaxed_motion_seventh, self.equiaxed_motion_eighth,
+                            self.equiaxed_motion_ninth, self.equiaxed_motion_tenth, self.equiaxed_motion_eleventh, self.equiaxed_motion_twelfth,
+                            self.equiaxed_motion_thirteenth, self.equiaxed_motion_fourteenth, self.equiaxed_motion_fifteenth,
+                            self.equiaxed_motion_sixteenth, self.equiaxed_motion_seventeenth, self.equiaxed_motion_eighteenth,
+                            self.equiaxed_motion_nineteenth, self.equiaxed_motion_twentieth, self.equiaxed_motion_twenty_one,
+                            self.equiaxed_motion_twenty_two,
+                            self.ballistics_first, self.ballistics_corner_first, self.ballistics_corner_second,
+                            self.ballistics_corner_third])
         return self.func()
 
 
     def phis_kr_kinematics(self):
         self.func = choice([self.uniform_motion_first, self.uniform_motion_second, self.uniform_motion_third, self.uniform_motion_fourth,
-                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh,
-                            self.uniform_motion_ninth, self.equiaxed_motion_first, self.equiaxed_motion_second, self.equiaxed_motion_third,
-                            self.equiaxed_motion_fourth, self.equiaxed_motion_fifth, self.equiaxed_motion_sixth, self.equiaxed_motion_seventh,
-                            self.equiaxed_motion_eighth, self.equiaxed_motion_ninth, self.equiaxed_motion_tenth, self.equiaxed_motion_eleventh,
-                            self.equiaxed_motion_twelfth, self.equiaxed_motion_thirteenth, self.equiaxed_motion_fourteenth, self.equiaxed_motion_fifteenth,
-                            self.equiaxed_motion_sixteenth, self.equiaxed_motion_seventeenth, self.equiaxed_motion_eighteenth, self.equiaxed_motion_nineteenth,
-                            self.equiaxed_motion_twelfth, self.equiaxed_motion_twenty_one, self.equiaxed_motion_twenty_two])
+                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh,self.uniform_motion_eighth,
+                            self.uniform_motion_ninth,
+                            self.equiaxed_motion_first, self.equiaxed_motion_second, self.equiaxed_motion_third, self.equiaxed_motion_fourth,
+                            self.equiaxed_motion_fifth, self.equiaxed_motion_sixth, self.equiaxed_motion_seventh, self.equiaxed_motion_eighth,
+                            self.equiaxed_motion_ninth, self.equiaxed_motion_tenth, self.equiaxed_motion_eleventh, self.equiaxed_motion_twelfth,
+                            self.equiaxed_motion_thirteenth, self.equiaxed_motion_fourteenth, self.equiaxed_motion_fifteenth,
+                            self.equiaxed_motion_sixteenth, self.equiaxed_motion_seventeenth, self.equiaxed_motion_eighteenth,
+                            self.equiaxed_motion_nineteenth, self.equiaxed_motion_twentieth, self.equiaxed_motion_twenty_one,
+                            self.equiaxed_motion_twenty_two])
         return self.func()
 
 
@@ -109,7 +114,8 @@ class TaskGenerator():
 
     def uniform_motion(self):
         self.func = choice([self.uniform_motion_first, self.uniform_motion_second, self.uniform_motion_third, self.uniform_motion_fourth,
-                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh,self.uniform_motion_eighth])
+                            self.uniform_motion_fifth, self.uniform_motion_sixth, self.uniform_motion_seventh,self.uniform_motion_eighth,
+                            self.uniform_motion_ninth])
         return self.func()
 
 
@@ -117,8 +123,10 @@ class TaskGenerator():
         self.func = choice([self.equiaxed_motion_first, self.equiaxed_motion_second, self.equiaxed_motion_third, self.equiaxed_motion_fourth,
                             self.equiaxed_motion_fifth, self.equiaxed_motion_sixth, self.equiaxed_motion_seventh, self.equiaxed_motion_eighth,
                             self.equiaxed_motion_ninth, self.equiaxed_motion_tenth, self.equiaxed_motion_eleventh, self.equiaxed_motion_twelfth,
-                            self.equiaxed_motion_fifteenth, self.equiaxed_motion_sixteenth, self.equiaxed_motion_seventeenth, self.equiaxed_motion_eighteenth,
-                            self.equiaxed_motion_nineteenth, self.equiaxed_motion_twelfth, self.equiaxed_motion_twenty_one, self.equiaxed_motion_twenty_two])
+                            self.equiaxed_motion_thirteenth, self.equiaxed_motion_fourteenth, self.equiaxed_motion_fifteenth,
+                            self.equiaxed_motion_sixteenth, self.equiaxed_motion_seventeenth, self.equiaxed_motion_eighteenth,
+                            self.equiaxed_motion_nineteenth, self.equiaxed_motion_twentieth, self.equiaxed_motion_twenty_one,
+                            self.equiaxed_motion_twenty_two])
         return self.func()
 
 
