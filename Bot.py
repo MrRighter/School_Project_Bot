@@ -16,11 +16,6 @@ else:
     print(".env file not found.\n")
 
 
-
-# hello
-
-
-
 bot = Bot(os.getenv("API_BOT"))
 dp = Dispatcher(bot)
 
