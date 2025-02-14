@@ -21,7 +21,6 @@ class Creator():
         pdf.multi_cell(190, 10, txt=text)
         pdf.output(path)
 
-
     def function_creator(self, key):
         que_text_result = ""
         ans_text_result = ""

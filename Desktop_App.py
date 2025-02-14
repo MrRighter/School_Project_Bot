@@ -2,28 +2,7 @@ import re
 from os import getcwd
 from sys import platform
 
-from flet import (
-    ElevatedButton,
-    Page,
-    Row,
-    Text,
-    icons,
-    TextField,
-    Checkbox,
-    Dropdown,
-    MainAxisAlignment,
-    dropdown,
-    RadioGroup,
-    Radio,
-    app,
-    VerticalDivider,
-    Column,
-    NavigationRail,
-    NavigationRailLabelType,
-    Icon,
-    NavigationRailDestination,
-    ScrollMode
-)
+from flet import *
 
 import Final_Executing_func as FEF
 
