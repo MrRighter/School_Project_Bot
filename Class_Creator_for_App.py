@@ -1,3 +1,7 @@
+"""это вообще почему-то не используется от слова совсем"""
+
+
+
 from Class_Gener import *
 from fpdf import FPDF
 
