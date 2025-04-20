@@ -133,11 +133,6 @@ class Interface:
             self.row6.controls.append(self.column)
             self.row6.update()
 
-            for i in range(int(e.control.value)):
-                print(
-                    f'Задача {i} Раздел {self.column.controls[i].controls[0].value} Тема {self.column.controls[i].controls[1].value}')
-                # тут можно посмотреть как обращаться к отдельным задачам их списка
-
     def choose_tema(self, e):
         if e.control.value == 'Физика':
             self.add_options(self.choose_tema_dropdown, list(self.themes_dict['Физика'].keys()))
@@ -448,11 +443,6 @@ if __name__ == "__main__":
 #             self.row6.clean()
 #             self.row6.controls.append(self.Column)
 #             self.row6.update()
-
-#             for i in range(int(e.control.value)):
-#                 print(
-#                     f'Задача {i} Раздел {self.Column.controls[i].controls[0].value} Тема {self.Column.controls[i].controls[1].value}')
-#                 # тут можно посмотреть как обращаться к отдельным задачам их списка
 
 #     def ChooseTema(self, e):
 #         if e.control.value == 'Физика':

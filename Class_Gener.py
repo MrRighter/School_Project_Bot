@@ -9,7 +9,7 @@ sign_args = ['+', '-']
 speed_var = [i for i in range(5, 36)]
 distance_var = [i for i in range(50, 251)]
 time_var = [i for i in range(5, 46)]
-deg_var = ['30', '45', '60', '90', '0']
+deg_var = ['30', '45', '60', '90']
 
 e_time_var = [i for i in range(1, 11)]
 acceleration_var = [i for i in range(2, 11)]
