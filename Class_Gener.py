@@ -548,12 +548,23 @@ class TaskGenerator():
         third_task_var = [' м. Ускорение тела равно ', " м с ускорением равным "]
         fourth_task_var = ' м/с². Найти начальную скорость тела.'
         fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
-        speed2 = str(choice(second_speed_var))
-        distance = str(choice(distance_var))
-        acceleration = str(choice(acceleration_var))
-        self.text_que = choice(first_task_var) + speed2 + choice(second_task_var) + distance + choice(third_task_var) + acceleration + fourth_task_var + choice(fifth_task_var)
-        self.text_ans = [round(sqrt((int(speed2)**2) - (int(distance) * int(acceleration) * 2)), 3)]
-        self.unit =["м/с"]
+
+        while True:
+            speed2 = choice(second_speed_var)
+            distance = choice(distance_var)
+            acceleration = choice(acceleration_var)
+
+            under_root = speed2**2 - 2 * distance * acceleration
+            if under_root >= 0:
+                break
+
+        self.text_que = (choice(first_task_var) + str(speed2) + choice(second_task_var) +
+                        str(distance) + choice(third_task_var) + str(acceleration) +
+                        fourth_task_var + choice(fifth_task_var))
+
+        self.text_ans = [round(sqrt(under_root), 3)]
+        self.unit = ["м/с"]
+
         return [self.text_que, self.text_ans, self.unit]
 
 
