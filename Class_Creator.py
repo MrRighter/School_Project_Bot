@@ -25,70 +25,96 @@ class Creator():
         que_text_result = ""
         ans_text_result = ""
 
-        # if key["Type"].lower() == "однотипные задания":
-        if key["Subject"].lower() == "физика":
-            if key["Theme"].lower() == "кинематика":
-                if key["Theme_section"].lower() == "равномерное движение":
-                    for i in range(int(key["N"])):
-                        que_ans_text = TaskGenerator().uniform_motion()
-                        ans_text_result += f'{i + 1}) Ответ: '
-                        for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
-                        que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
-                        ans_text_result += '\n'
-                    return que_text_result, ans_text_result
-                elif key["Theme_section"].lower() == "равноускоренное движение":
-                    for i in range(int(key["N"])):
-                        que_ans_text = TaskGenerator().equiaxed_motion()
-                        ans_text_result += f'{i + 1}) Ответ: '
-                        for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
-                        que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
-                        ans_text_result += '\n'
-                    return que_text_result, ans_text_result
-            elif key["Theme"].lower() == "баллистика":
-                if key["Theme_section"].lower() == "свободное падение тел":
-                    for i in range(int(key["N"])):
-                        que_ans_text = TaskGenerator().ballistics_motion()
-                        ans_text_result += f'{i + 1}) Ответ: '
-                        for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
-                        que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
-                        ans_text_result += '\n'
-                    return que_text_result, ans_text_result
-                elif key["Theme_section"].lower() == "баллистическое движение":
-                    for i in range(int(key["N"])):
-                        que_ans_text = TaskGenerator().ballistics_corner_motion()
-                        ans_text_result += f'{i + 1}) Ответ: '
-                        for j, answer in enumerate(que_ans_text[1]):
-                            ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>; '
-                        que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
-                        ans_text_result += '\n'
-                    return que_text_result, ans_text_result
+        if key["Type"].lower() == "однотипные задания":
+            if key["Subject"].lower() == "физика":
+                if key["Theme"].lower() == "кинематика":
+                    if key["Theme_section"].lower() == "равномерное движение":
+                        for i in range(int(key["N"])):
+                            que_ans_text = TaskGenerator().uniform_motion()
+                            ans_text_result += f'{i + 1}) Ответ: '
+                            for j, answer in enumerate(que_ans_text[1]):
+                                ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>'
+                            que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
+                            ans_text_result += '\n'
+                        return que_text_result, ans_text_result
+                    elif key["Theme_section"].lower() == "равноускоренное движение":
+                        for i in range(int(key["N"])):
+                            que_ans_text = TaskGenerator().equiaxed_motion()
+                            ans_text_result += f'{i + 1}) Ответ: '
+                            for j, answer in enumerate(que_ans_text[1]):
+                                ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>'
+                            que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
+                            ans_text_result += '\n'
+                        return que_text_result, ans_text_result
+                elif key["Theme"].lower() == "баллистика":
+                    if key["Theme_section"].lower() == "свободное падение тел":
+                        for i in range(int(key["N"])):
+                            que_ans_text = TaskGenerator().ballistics_motion()
+                            ans_text_result += f'{i + 1}) Ответ: '
+                            for j, answer in enumerate(que_ans_text[1]):
+                                ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>'
+                            que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
+                            ans_text_result += '\n'
+                        return que_text_result, ans_text_result
+                    elif key["Theme_section"].lower() == "баллистическое движение":
+                        for i in range(int(key["N"])):
+                            que_ans_text = TaskGenerator().ballistics_corner_motion()
+                            ans_text_result += f'{i + 1}) Ответ: '
+                            for j, answer in enumerate(que_ans_text[1]):
+                                ans_text_result += f'<tg-spoiler>{answer} {que_ans_text[2][j]}</tg-spoiler>'
+                            que_text_result += f'{i+1}) {que_ans_text[0]}\n\n'
+                            ans_text_result += '\n'
+                        return que_text_result, ans_text_result
+        elif key["Type"] == "контрольная работа":
+            if key["Subject"] == "физика":
+                if key["Theme"] == "кинематика":
+                    if key["Theme_section"] == "":
+                        num_questions = round(0.3 * int(key["N"]))
+                        num_tests = round(0.2 * int(key["N"]))
+                        num_problems = int(key["N"]) - num_questions - num_tests
+                        for i in range(num_questions):
+                            que_text_result += f'{i+1}) {TaskGenerator().questions_for_kr_kinematics()}\n\n'
 
-        #         elif key["Theme"] == "статика":
-        #             pass
-        #         elif key["Theme"] == "работа и энергия":
-        #             pass
-        #     elif key["Subject"] == "математика":
-        #         passelif key["Type"] == "контрольная работа":
+                        for i in range(num_tests):
+                            que_text_result += f'{num_questions + i+1}) {TaskGenerator().tests_for_kr_kinematics()}\n\n'
 
-        if key["Subject"].lower() == "физика":
-            if key["Theme"].lower() == "кинематика":
-                num_questions = max(1, round(0.3 * int(key["N"])))
-                num_tests = max(1, round(0.2 * int(key["N"])))
-                num_problems = int(key["N"]) - num_questions - num_tests
+                        for i in range(num_problems):
+                            que_ans_text = TaskGenerator().phis_kr_kinematics()
+                            que_text_result += f'{num_questions+num_tests+i+1}) {que_ans_text[0]}\n\n'
+                            ans_text_result += f'{num_questions+num_tests+i+1}) Ответ: <tg-spoiler>{que_ans_text[1][0]} {que_ans_text[2][0]}</tg-spoiler>\n'
 
-                for i in range(num_questions):
-                    que_text_result += f'{i+1}) {TaskGenerator().questions_for_kr_kinematics()}\n\n'
+                        return que_text_result, ans_text_result
+                elif key["Theme"] == "механика":
+                    if key["Theme_section"] == "":
+                        num_questions = round(0.3 * int(key["N"]))
+                        num_tests = round(0.2 * int(key["N"]))
+                        num_problems = int(key["N"]) - num_questions - num_tests
+                        for i in range(num_questions):
+                            que_text_result += f'{i+1}) {TaskGenerator().questions_for_kr_mechanics()}\n\n'
 
-                for i in range(num_tests):
-                    question, options = TaskGenerator().tests_for_kr_kinematics().split('\n')
-                    que_text_result += f'{num_questions+i+1}) {question}\n{options}\n\n'
+                        for i in range(num_tests):
+                            que_text_result += f'{num_questions + i+1}) {TaskGenerator().tests_for_kr_mechanics()}\n\n'
 
-                for i in range(num_problems):
-                    que_ans_text = TaskGenerator().phis_kr_kinematics()
-                    que_text_result += f'{num_questions+num_tests+i+1}) {que_ans_text[0]}\n\n'
-                    ans_text_result += f'{num_questions+num_tests+i+1}) {que_ans_text[1][0]} {que_ans_text[2][0]}\n'
+                        for i in range(num_problems):
+                            que_ans_text = TaskGenerator().phis_kr_mechanics()
+                            que_text_result += f'{num_questions+num_tests+i+1}) {que_ans_text[0]}\n\n'
+                            ans_text_result += f'{num_questions+num_tests+i+1}) Ответ: <tg-spoiler>{que_ans_text[1][0]} {que_ans_text[2][0]}</tg-spoiler>\n'
 
-                return que_text_result, ans_text_result
+                        return que_text_result, ans_text_result
+                elif key["Theme"] == "баллистика":
+                    if key["Theme_section"] == "":
+                        num_questions = round(0.3 * int(key["N"]))
+                        num_tests = round(0.2 * int(key["N"]))
+                        num_problems = int(key["N"]) - num_questions - num_tests
+                        for i in range(num_questions):
+                            que_text_result += f'{i+1}) {TaskGenerator().questions_for_kr_ballistics()}\n\n'
+
+                        for i in range(num_tests):
+                            que_text_result += f'{num_questions + i+1}) {TaskGenerator().tests_for_kr_ballistics()}\n\n'
+
+                        for i in range(num_problems):
+                            que_ans_text = TaskGenerator().phis_kr_ballistics()
+                            que_text_result += f'{num_questions+num_tests+i+1}) {que_ans_text[0]}\n\n'
+                            ans_text_result += f'{num_questions+num_tests+i+1}) Ответ: <tg-spoiler>{que_ans_text[1][0]} {que_ans_text[2][0]}</tg-spoiler>\n'
+
+                        return que_text_result, ans_text_result

@@ -1,17 +1,11 @@
 import re
-import os
-import sys
 import flet as ft
 from flet import *
 
-import Final_Executing_func as task_generator
+import Final_Executing_func_App as task_generator
 
 
 class TaskGeneratorApp:
-    """
-    Unified Task Generator App with Fast and Constructor modes.
-    """
-
     def __init__(self, page: Page):
         self.page = page
         self.page.title = "Генератор учебных заданий"
@@ -23,7 +17,7 @@ class TaskGeneratorApp:
         self.subjects = {
             "Физика": {
                 "Кинематика": ["Равномерное движение", "Равноускоренное движение"],
-                "Баллистика": ["Свободное падение", "Баллистическое движение"],
+                "Баллистика": ["Свободное падение", "Баллистическое движение"]
             }
         }
 
@@ -55,6 +49,7 @@ class TaskGeneratorApp:
                 Radio(value="КР", label="Контрольная"),
             ]),
             value="СР",
+            on_change=self._on_work_type_change
         )
 
         # Fast mode controls with fixed widths
@@ -81,15 +76,14 @@ class TaskGeneratorApp:
         self.fast_count.on_change = self._sanitize_numeric
         self.const_count.on_change = self._on_const_count_change
 
+    def _on_nav_change(self, e):
+        """Обработчик изменения выбора в навигации"""
+        self.selected_index = e.control.selected_index
+        self._layout()
+
     def _layout(self):
-        # Main layout based on selected_index
+        """Обновляет макет в зависимости от выбранного режима"""
         content = self._build_fast_view() if self.selected_index == 0 else self._build_constructor_view()
-        # Footer label
-        footer = Container(
-            Text("Made in GoidaLABS", style=TextStyle(size=12, weight=FontWeight.BOLD, italic=True)),
-            alignment=alignment.bottom_right,
-            padding=5
-        )
         self.page.clean()
         self.page.add(
             Row([
@@ -98,11 +92,11 @@ class TaskGeneratorApp:
                 Column([content], expand=True),
                 VerticalDivider(width=1),
                 self.output,
-            ], expand=True, vertical_alignment=CrossAxisAlignment.START),
-            footer
+            ], expand=True, vertical_alignment=CrossAxisAlignment.START)
         )
 
     def _build_fast_view(self):
+        """Строит вид для быстрого режима"""
         return Column([
             Text("Быстрая генерация", style=TextStyle(size=20, weight=FontWeight.BOLD)),
             Row([Text("Тип работы:", width=100), self.work_type_radio]),
@@ -112,6 +106,7 @@ class TaskGeneratorApp:
         ], spacing=15, expand=True)
 
     def _build_constructor_view(self):
+        """Строит вид для режима конструктора"""
         return Column([
             Text("Конструктор заданий", style=TextStyle(size=20, weight=FontWeight.BOLD)),
             self.const_count,
@@ -119,50 +114,73 @@ class TaskGeneratorApp:
             self.const_button,
         ], spacing=15, expand=True)
 
-    def _on_nav_change(self, e):
-        self.selected_index = e.control.selected_index
-        self._layout()
+    def _on_work_type_change(self, e):
+        """Обработчик изменения типа работы"""
+        if self.fast_subject.value:
+            self._update_theme_options()
+        self.page.update()
+
+    def _update_theme_options(self):
+        """Обновляет доступные разделы в зависимости от типа работы"""
+        work_type = self.work_type_radio.value
+        subject = self.fast_subject.value
+
+        if work_type == "КР":
+            # Для контрольных работ показываем только основные разделы без подразделов
+            themes = ["Кинематика", "Механика", "Баллистика"]
+            self.fast_theme.options = [dropdown.Option(t) for t in themes]
+            self.fast_subtheme.visible = False
+        else:
+            # Для самостоятельных работ показываем полную структуру
+            themes = list(self.subjects[subject].keys())
+            self.fast_theme.options = [dropdown.Option(t) for t in themes]
+
+        self.fast_theme.value = None
+        self.fast_theme.visible = True
+        self.fast_theme.update()
+        self.fast_subtheme.update()
+
+    def _on_fast_subject_change(self, e):
+        """Обработчик изменения предмета"""
+        sub = e.control.value
+        if sub:
+            self._update_theme_options()
+
+    def _on_fast_theme_change(self, e):
+        """Обработчик изменения раздела"""
+        if self.work_type_radio.value == "КР":
+            # Для контрольных работ не показываем подтемы
+            self.fast_subtheme.visible = False
+            self.fast_subtheme.update()
+            return
+
+        tema = e.control.value
+        if tema:
+            subs = self.subjects[self.fast_subject.value].get(tema, [])
+            self.fast_subtheme.options = [dropdown.Option(st) for st in subs]
+            self.fast_subtheme.value = None
+            self.fast_subtheme.visible = bool(subs)  # Показываем только если есть подтемы
+            self.fast_subtheme.update()
 
     def _sanitize_numeric(self, e):
+        """Очищает ввод от нечисловых символов"""
         e.control.value = re.sub(r"\D", "", e.control.value)
         e.control.update()
 
-    # Fast mode handlers
-    def _on_fast_subject_change(self, e):
-        sub = e.control.value
-        if sub:
-            themes = list(self.subjects[sub].keys())
-            self.fast_theme.options = [dropdown.Option(t) for t in themes]
-            self.fast_theme.value = None
-            self.fast_theme.visible = True
-            self.fast_subtheme.visible = False
-
-            # Обновляем оба списка и страницу
-            self.fast_theme.update()
-            self.fast_subtheme.update()
-            self.page.update()
-
-    def _on_fast_theme_change(self, e):
-        tema = e.control.value
-        if tema:
-            subs = self.subjects[self.fast_subject.value][tema]
-            self.fast_subtheme.options = [dropdown.Option(st) for st in subs]
-            self.fast_subtheme.value = None
-            self.fast_subtheme.visible = True
-
-            # Обновляем списки и страницу
-            self.fast_theme.update()
-            self.fast_subtheme.update()
-            self.page.update()
-
     def _generate_fast(self, e):
-        if not all([self.fast_subject.value, self.fast_theme.value, self.fast_subtheme.value, self.fast_count.value]):
+        """Генерация задач в быстром режиме"""
+        if not all([self.fast_subject.value, self.fast_theme.value, self.fast_count.value]):
             return self._show_error("Заполните все обязательные поля!")
+
+        # Для контрольных работ subtheme не обязателен
+        if self.work_type_radio.value == "СР" and not self.fast_subtheme.value:
+            return self._show_error("Заполните все обязательные поля!")
+
         try:
             cfg = {
                 "Subject": self.fast_subject.value,
                 "Theme": self.fast_theme.value,
-                "Theme_section": self.fast_subtheme.value,
+                "Theme_section": self.fast_subtheme.value if self.work_type_radio.value == "СР" else "",
                 "N": int(self.fast_count.value),
                 "Type": self.work_type_radio.value,
             }
@@ -171,8 +189,8 @@ class TaskGeneratorApp:
         except Exception as ex:
             self._show_error(f"Ошибка: {ex}")
 
-    # Constructor mode handlers
     def _on_const_count_change(self, e):
+        """Обработчик изменения количества заданий в конструкторе"""
         self._sanitize_numeric(e)
         val = int(e.control.value) if e.control.value else 0
         self.const_tasks_container.controls.clear()
@@ -187,12 +205,14 @@ class TaskGeneratorApp:
         self.const_tasks_container.update()
 
     def _populate_subthemes(self, e, subth_dropdown):
+        """Заполняет подтемы для выбранного раздела"""
         tema = e.control.value
         subs = self.subjects["Физика"].get(tema, [])
         subth_dropdown.options = [dropdown.Option(st) for st in subs]
         subth_dropdown.update()
 
     def _generate_constructor(self, e):
+        """Генерация задач в режиме конструктора"""
         results = []
         try:
             for row in self.const_tasks_container.controls:
@@ -206,10 +226,12 @@ class TaskGeneratorApp:
             self._show_error(str(ex))
 
     def _set_output(self, text: str):
+        """Устанавливает текст в область вывода"""
         self.output.content.controls[0].value = text
         self.output.update()
 
     def _show_error(self, msg: str):
+        """Показывает сообщение об ошибке"""
         self.page.snack_bar = SnackBar(content=Text(msg), open=True)
         self.page.update()
 
