@@ -148,9 +148,13 @@ class TaskGenerator():
         fifth_task_var = ["Ответ округлите до тысячных. ", "Ответ округлите до 3 знаков после запятой. "]
         hight1 = str(choice(ball_universal_var))
         hight2 = str(choice(ball_universal_var))
+        g = 10  # Ускорение свободного падения
+        h1 = int(hight1)
+        h2 = int(hight2)
+        t = sqrt(2*h1/g)
+        self.text_ans = [round(abs(h2 - h1)/t, 3)]
         self.text_que = choice(first_task_var) + hight1 + choice(second_task_var) + hight2 + third_task_var + fourth_task_var + choice(fifth_task_var)
         self.unit = ["м/с"]
-        self.text_ans = [round((abs(int(hight2) - int(hight1))) * sqrt(10 / (2 * int(hight1))), 3)]
         return [self.text_que, self.text_ans, self.unit]
 
 

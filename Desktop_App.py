@@ -39,8 +39,14 @@ class Interface:
         # Элементы интерфейса
         self.input_aa = TextField(value='1', visible=False, width=200, label="Количество задач")
         self.input_aac = TextField(value='1', visible=False, width=200, label="Количество задач")
-        self.column = Column(scroll=ScrollMode.AUTO, height=300)
-        self.column_text_fast = Column(scroll=ScrollMode.AUTO, height=300, width=300)
+        self.column = Column(scroll=ScrollMode.AUTO, height=1000)
+        self.column_text_fast = Column(
+            scroll=ScrollMode.AUTO,
+            expand=True,
+            height=1000,
+            width=1000,
+            auto_scroll=True
+)
         self.number_of_tasks = TextField(on_change=self.example_func, on_submit=self.example_func, label="Количество задач")
 
         self.view_graphs = Checkbox(label="Выбрать тему?", value=False, on_change=self.obrab_view_graphs, visible=False)
@@ -307,310 +313,284 @@ if __name__ == "__main__":
 
 
 
-
-
-
-"""СТАРЫЙ КОД"""
-
 # import re
-# from os import getcwd
+# from os import getcwd, path as os_path
 # from sys import platform
 
 # from flet import *
 
+# # Предполагается, что Final_Executing_func.py находится в той же директории
 # import Final_Executing_func as FEF
 
 
-# Mac = False
-# path = ''
-# if Mac == True:
-#     splitter = '/'
-# else:
-#     splitter = '\\'
-# for item in getcwd().split(splitter):
-#     path += item + '/'
-# if platform == 'win32':
-#     splitter = '/'
-# else:
-#     splitter = '/'
-
-
-# class Interface():
-#     "Этот класс для..."
-
-#     def __init__(self, page):
-#         self.splitter = splitter
+# class Interface:
+#     def __init__(self, page: Page):
 #         self.page = page
-#         self.selected_index = 0
-#         self.ThemsDict = {'Физика': {'Кинематика': ["Равномерное движение", "Равноускоренное движение"],
-#                                      'Баллистика': ["Свободное падение тел", "Баллистическое движение", ]
-#                                      }}
+#         self.page.title = "Генератор учебных заданий"
+#         self.page.vertical_alignment = MainAxisAlignment.START
 
-#         self.InputAA = TextField(value='1', visible=False, width=200, label="Количество задач")
-#         self.InputAAC = TextField(value='1', visible=False, width=200, label="Количество задач")
-#         self.Column = Column(scroll=ScrollMode.AUTO, height=300)
-#         self.ColumnTextFast = Column(scroll=ScrollMode.AUTO, height=300,width=300)
-#         self.NumberOfTasks = TextField(on_change=self.example_func, on_submit=self.example_func,
-#                                        label="Количество задач")
+#         self.themes_dict = {
+#             'Физика': {
+#                 'Кинематика': ["Равномерное движение", "Равноускоренное движение"],
+#                 'Баллистика': ["Свободное падение тел", "Баллистическое движение"],
+#             }
+#         }
 
-#         self.ViewGraphs = Checkbox(label="Выбрать тему?", value=False, on_change=self.Obrab_ViewGraphs,
-#                                    visible=False)
-#         self.PDFPROVERKA = Checkbox(label="PDF", value=False, visible=False)
-#         self.TXTPROVERKA = Checkbox(label="TXT", value=True, visible=False)
-#         self.Standartaligment = MainAxisAlignment.START
-#         self.ChooseFunction = Dropdown(
-#             label="Выберите предмет",
-#             data='Type',
-#             on_change=self.ChooseTema,
-#             options=[
-#                 dropdown.Option("Физика")
-#             ],
+#         # Элементы интерфейса
+#         self.number_of_tasks_fast = TextField(
+#             label="Количество задач",
+#             value="1",
+#             keyboard_type=KeyboardType.NUMBER,
+#             on_change=self.update_task_fields,
+#             on_submit=self.generate_fast_task,
+#             expand=True,
 #         )
-#         self.ChoosePredmet = Dropdown(
-#             label="Выберите предмет",
-#             data='Type',
-#             options=[
-#                 dropdown.Option("Физика")
-#             ],
+#         self.number_of_tasks_constructor = TextField(
+#             label="Количество задач",
+#             value="1",
+#             keyboard_type=KeyboardType.NUMBER,
+#             on_change=self.update_constructor_fields,
+#             expand=True,
 #         )
 
-#         self.ChooseTemaDropdown = Dropdown(
+#         self.subject_dropdown_fast = Dropdown(
+#             label="Выберите предмет",
+#             options=[dropdown.Option("Физика")],
+#             on_change=self.populate_theme_dropdown_fast,
+#             expand=True,
+#         )
+#         self.theme_dropdown_fast = Dropdown(
 #             label="Выберите раздел",
-#             data='Type',
+#             options=[],
 #             visible=False,
-#             on_change=self.SetChoosePodTemaDropdown,
+#             on_change=self.populate_sub_theme_dropdown_fast,
+#             expand=True,
 #         )
-
-#         self.ChoosePodTemaDropdown = Dropdown(
+#         self.sub_theme_dropdown_fast = Dropdown(
 #             label="Выберите тему",
-#             data='Type',
+#             options=[],
 #             visible=False,
+#             expand=True,
 #         )
 
-#         self.ON_OFF_Radio = RadioGroup(
-#             value='СР',
+#         self.subject_dropdown_constructor = Dropdown(
+#             label="Выберите предмет",
+#             options=[dropdown.Option("Физика")],
+#             on_change=self.update_constructor_task_fields,
+#             expand=True,
+#         )
+#         self.task_fields_constructor = Column(scroll=ScrollMode.AUTO)
+
+#         self.work_type_radio = RadioGroup(
 #             content=Row(
 #                 [
-#                     Radio(value="СР", label='Самостоятельная работа'),
-#                     Radio(value="КР", label='Контрольная работа'),
+#                     Radio(value="СР", label="Самостоятельная работа"),
+#                     Radio(value="КР", label="Контрольная работа"),
 #                 ]
-#             )
+#             ),
+#             value="СР",
 #         )
-#         self.DrowButton = ElevatedButton('Составить', on_click=self.DrowSimplePlot)
-#         self.DrowButtonC = ElevatedButton('Составить', on_click=self.DrowSimplePlotC)
-#         self.Label = Text('Выбор работы:  ', visible=True)
 
-#     def CorrectTheme(self, e):
-#         self.R = e.control.value
-#         if self.ChoosePredmet.value == list(self.ThemsDict.keys())[0]:
-#             if e.control.value == list(self.ThemsDict['Физика'].keys())[0]:
-#                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
-#             elif e.control.value == list(self.ThemsDict['Физика'].keys())[1]:
-#                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Баллистика'])
-#             self.Column.controls[e.control.key].controls[2].update()
-#         pass
+#         self.generate_button_fast = ElevatedButton(
+#             "Составить", on_click=self.generate_fast_task
+#         )
+#         self.generate_button_constructor = ElevatedButton(
+#             "Составить", on_click=self.generate_constructor_task
+#         )
 
-#     def CorrectPodTheme(self, e):
-#         self.T = e.control.value
-#         if self.ChoosePredmet.value == 'Физика':
-#             # Если выбрана тема1
-#             if e.control.value == 'Кинематика':
-#                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Кинематика'])
-#             elif e.control.value == 'Баллистика':
-#                 self.AddOptions(self.Column.controls[e.control.key].controls[2], self.ThemsDict['Физика']['Баллистика'])
-#             self.Column.controls[e.control.key].controls[2].update()
-#         # тут можно посмотреть как обращаться к отдельным задачам их списка
+#         self.output_text = Text(selectable=True)
+#         self.output_column = Container(
+#             content=Column([self.output_text], horizontal_alignment=CrossAxisAlignment.START),
+#             border=border.all(1, colors.OUTLINE),
+#             padding=10,
+#             expand=True,
+#             height=300,
+#         )
 
-#     def example_func(self, e):
-#         # self.TXTPROVERKA.visible=True
-#         # self.TXTPROVERKA.update()
-#         # self.PDFPROVERKA.visible = True
-#         # self.PDFPROVERKA.update()
-#         e.control.value = re.sub("[a-zA-Za-яА-Я]", "", e.control.value)
-#         e.control.update()
-#         if e.control.value != '':
-#             self.Column.controls = []
-#             for i in range(1, int(e.control.value) + 1):
-#                 if self.ChoosePredmet.value == 'Физика':
-#                     self.Column.controls.append(Row([Text(f'{i}'),
-#                                                      Dropdown(label='Раздел', width=200, on_change=self.CorrectTheme,
-#                                                               key=i - 1),
-#                                                      Dropdown(label='Тема', width=200, on_change=self.CorrectPodTheme,
-#                                                               key=i - 1),
-#                                                      ]))
-#                     self.Add_PhisicsThems(self.Column.controls[i - 1].controls[1])
-
-#             self.row6.clean()
-#             self.row6.controls.append(self.Column)
-#             self.row6.update()
-
-#     def ChooseTema(self, e):
-#         if e.control.value == 'Физика':
-#             self.AddOptions(self.ChooseTemaDropdown, list(self.ThemsDict['Физика'].keys()))
-#         # self.ViewGraphs.visible = True
-#         # self.ViewGraphs.update()
-#         self.ChooseTemaDropdown.visible = True
-#         self.ChooseTemaDropdown.update()
-
-#     def Add_PhisicsThems(self, object):
-#         l = ['Кинематика', 'Баллистика']
-#         object.options = []
-#         for theme in l:
-#             object.options.append(dropdown.Option(theme))
-
-#     def AddOptions(self, object, names):
-#         object.options = []
-#         for theme in names:
-#             object.options.append(dropdown.Option(theme))
-
-#     def AddPhisicsPodTema(self, object, tema):
-#         if tema == 'Кинематика':
-#             self.AddOptions(object, self.ThemsDict['Физика']['Кинематика'])
-#         elif tema == 'Баллистика':
-#             self.AddOptions(object, self.ThemsDict['Физика']['Баллистика'])
-
-#     def SetChoosePodTemaDropdown(self, e):
-#         self.AddPhisicsPodTema(self.ChoosePodTemaDropdown, e.control.value)
-#         self.ChoosePodTemaDropdown.value = ''
-#         self.ChoosePodTemaDropdown.visible=True
-#         self.ChoosePodTemaDropdown.update()
-#         self.InputAA.visible = True
-#         # self.TXTPROVERKA.visible = True
-#         # self.PDFPROVERKA.visible = True
-#         self.InputAA.update()
-#         # self.TXTPROVERKA.update()
-#         # self.PDFPROVERKA.update()
-
-#     def Obrab_ViewGraphs(self, e):
-#         pass
-#     #     if e.control.value:
-#     #         self.ChoosePodTemaDropdown.visible = True
-#     #     else:
-#     #         self.ChoosePodTemaDropdown.visible = False
-#     #     self.ChoosePodTemaDropdown.update()
-
-#     def DrowSimplePlot(self, e):
-#         KEY = {"Subject":self.ChooseFunction.value,
-#                'Theme':self.ChooseTemaDropdown.value,
-#                'Theme_section':self.ChoosePodTemaDropdown.value,
-#                'N':int(self.InputAA.value),
-#                # 'PDF':self.PDFPROVERKA.value,
-#                # 'TXT':self.TXTPROVERKA.value
-#                }
-
-#         text = FEF.GetTaskText(KEY)
-
-#         self.ColumnTextFast.controls = []
-#         self.ColumnTextFast.controls.append(Row([Text(value=f'{text}',width=300,height=300)],
-#                                                 width=300,height=300,scroll=ScrollMode.AUTO))
-#         self.ColumnTextFast.update()
-
-#     def DrowSimplePlotC(self, e):
-#         KEY = {"Subject":self.ChoosePredmet.value,
-#                'Theme':self.R,
-#                'Theme_section':self.T,
-#                'N':int(self.InputAAC.value),
-#                # 'PDF':self.PDFPROVERKA.value,
-#                # 'TXT':self.TXTPROVERKA.value
-#                }
-#         text = FEF.GetTaskText(KEY)
-#         self.ColumnTextFast.controls = []
-#         self.ColumnTextFast.controls.append(Row([Text(value=f'{text}',width=300,height=300)],
-#                                                 width=300,height=300,scroll=ScrollMode.AUTO))
-#         self.ColumnTextFast.update()
-
-
-
-#     def get_menu(self):
-#         rail = NavigationRail(
-#             selected_index=self.selected_index,
-#             label_type=NavigationRailLabelType.ALL,
-#             min_width=100,
-#             min_extended_width=400,
-#             group_alignment=-0.9,
-#             destinations=[
-#                 NavigationRailDestination(
-#                     icon_content=Icon(icons.HOME),
-#                     selected_icon=icons.HOME,
-#                     label="Быстрая генерация"
-#                 ),
-#                 NavigationRailDestination(
-#                     icon_content=Icon(icons.SETTINGS),
-#                     selected_icon=icons.SETTINGS,
-#                     label="Конструктор",
-#                 ),
+#         self.fast_generation_view = Column(
+#             [
+#                 Text("Быстрая генерация", style=TextStyle(size=20, weight=FontWeight.BOLD)),
+#                 Row([Text("Тип работы:", width=150), self.work_type_radio]),
+#                 self.subject_dropdown_fast,
+#                 self.theme_dropdown_fast,
+#                 self.sub_theme_dropdown_fast,
+#                 self.number_of_tasks_fast,
+#                 self.generate_button_fast,
+#                 Text("Результат:", style=TextStyle(weight=FontWeight.BOLD)),
+#                 self.output_column,
 #             ],
-#             on_change=self.rebuild,
+#             horizontal_alignment=CrossAxisAlignment.START,
+#             expand=True,
+#             scroll=ScrollMode.AUTO,
 #         )
-#         return rail
 
-#     def get_Setup(self):
-#         row1 = Row([self.Label, self.ON_OFF_Radio], alignment=self.Standartaligment)
-#         row2 = Row([self.ChooseFunction, self.DrowButton], alignment=self.Standartaligment)
-#         row3 = Row([self.ChooseTemaDropdown, self.ViewGraphs], alignment=self.Standartaligment)
-#         row4 = Row([self.ChoosePodTemaDropdown], alignment=self.Standartaligment)
-#         row5 = Row([self.InputAA, self.TXTPROVERKA, self.PDFPROVERKA], alignment=self.Standartaligment)
+#         self.constructor_view = Column(
+#             [
+#                 Text("Конструктор", style=TextStyle(size=20, weight=FontWeight.BOLD)),
 
-#         body = Column([Row([Text('Быстрая генерация')]),
-#                        row1,
-#                        row2,
-#                        row3,
-#                        row4,
-#                        row5,
-#                        self.ColumnTextFast,
-#                        ])
-#         return body
+# self.subject_dropdown_constructor,
+#                 self.number_of_tasks_constructor,
+#                 self.task_fields_constructor,
+#                 self.generate_button_constructor,
+#                 Text("Результат:", style=TextStyle(weight=FontWeight.BOLD)),
+#                 self.output_column,
+#             ],
+#             horizontal_alignment=CrossAxisAlignment.START,
+#             expand=True,
+#             scroll=ScrollMode.AUTO,
+#         )
 
-#     def get_Constructor(self):
-#         row1 = Row([self.Label, self.ON_OFF_Radio], alignment=self.Standartaligment)
-#         row2 = Row([self.ChoosePredmet, self.DrowButtonC], alignment=self.Standartaligment)
-#         row3 = Row([self.NumberOfTasks], alignment=self.Standartaligment)
-#         self.row6 = Row(alignment=self.Standartaligment)
-#         row7 = Row([self.TXTPROVERKA, self.PDFPROVERKA], alignment=self.Standartaligment)
+#         self.tabs = Tabs(
+#             expand=True,
+#             tabs=[
+#                 Tab(text="Быстрая генерация", content=self.fast_generation_view),
+#                 Tab(text="Конструктор", content=self.constructor_view),
+#             ],
+#             on_change=self.tab_changed,
+#         )
 
-#         body = Column([row1,
-#                        row2,
-#                        row3,
-#                        self.row6,
-#                        row7,
-#                        self.ColumnTextFast,
-#                        ])
-#         return body
-
-#     def get_body(self, e):
-#         if isinstance(e, str):  # Обработка вызова из класса
-#             if e == 'Быстрая генерация':
-#                 return self.get_Setup()
-#             elif e == 'Конструктор':
-#                 return self.get_Constructor()
-
-#         elif isinstance(e.control, NavigationRail):  # Обработка вызова из Навигационного меню
-#             if e.control.selected_index == 0:
-#                 return self.get_Setup()
-#             elif e.control.selected_index == 1:
-#                 return self.get_Constructor()
-
-#     def rebuild(self, e):
-#         self.page.clean()
-#         body = self.get_body(e)
 #         self.page.add(
-#             Row(
-#                 [
-#                     self.get_menu(), VerticalDivider(width=1),
-#                     Column([body], alignment=MainAxisAlignment.START, expand=True),
-#                 ], expand=True,
-#             )
+#             Tabs(
+#             expand=True,
+#             tabs=[
+#                 Tab(text="Быстрая генерация", content=self.fast_generation_view),
+#                 Tab(text="Конструктор", content=self.constructor_view),
+#             ],
+#             on_change=self.tab_changed,
 #         )
+#         )
+
+#     def tab_changed(self, e):
 #         self.page.update()
-#         pass
+
+#     def populate_theme_dropdown_fast(self, e):
+#         self.theme_dropdown_fast.options = [
+#             dropdown.Option(key) for key in self.themes_dict.get(e.control.value, {})
+#         ]
+#         self.theme_dropdown_fast.value = None
+#         self.theme_dropdown_fast.visible = True
+#         self.theme_dropdown_fast.update()
+#         self.sub_theme_dropdown_fast.options = []
+#         self.sub_theme_dropdown_fast.value = None
+#         self.sub_theme_dropdown_fast.visible = False
+#         self.sub_theme_dropdown_fast.update()
+
+#     def populate_sub_theme_dropdown_fast(self, e):
+#         self.sub_theme_dropdown_fast.options = [
+#             dropdown.Option(item)
+#             for item in self.themes_dict.get(
+#                 self.subject_dropdown_fast.value, {}
+#             ).get(e.control.value, [])
+#         ]
+#         self.sub_theme_dropdown_fast.value = None
+#         self.sub_theme_dropdown_fast.visible = True
+#         self.sub_theme_dropdown_fast.update()
+
+#     def update_task_fields(self, e):
+#         e.control.value = re.sub(r"[^0-9]", "", e.control.value)
+#         e.control.update()
+
+#     def generate_fast_task(self, e):
+#         subject = self.subject_dropdown_fast.value
+#         theme = self.theme_dropdown_fast.value
+#         sub_theme = self.sub_theme_dropdown_fast.value
+#         n_tasks = int(self.number_of_tasks_fast.value) if self.number_of_tasks_fast.value else 1
+
+#         if subject and theme and sub_theme and n_tasks > 0:
+#             key = {
+#                 "Subject": subject,
+#                 "Theme": theme,
+#                 "Theme_section": sub_theme,
+#                 "N": n_tasks,
+#             }
+#             task_text = FEF.GetTaskText(key)
+#             self.output_text.value = task_text
+#             self.output_column.update()
+#         else:
+#             self.page.show_snack_bar(
+#                 SnackBar(Text("Пожалуйста, заполните все поля."))
+#             )
+
+#     def update_constructor_fields(self, e):
+#         e.control.value = re.sub(r"[^0-9]", "", e.control.value)
+#         e.control.update()
+#         self.update_constructor_task_fields(None)
+
+#     def update_constructor_task_fields(self, e):
+#         self.task_fields_constructor.controls.clear()
+#         num_tasks = (
+#             int(self.number_of_tasks_constructor.value)
+#             if self.number_of_tasks_constructor.value
+#             else 1
+#         )
+#         for i in range(num_tasks):
+#             theme_dropdown = Dropdown(
+#                 label=f"Раздел {i+1}",
+#                 options=[
+#                     dropdown.Option(key)
+#                     for key in self.themes_dict.get(
+#                         self.subject_dropdown_constructor.value, {}
+#                     )
+#                 ],
+#                 expand=True,
+#             )
+#             sub_theme_dropdown = Dropdown(
+#                 label=f"Тема {i+1}", options=[], expand=True
+#             )
+#             theme_dropdown.on_change = lambda event: self.populate_constructor_sub_theme(
+#                 event, sub_theme_dropdown
+#             )
+#             self.task_fields_constructor.controls.append(
+#                 Column([theme_dropdown, sub_theme_dropdown])
+#             )
+#         self.task_fields_constructor.update()
+
+#     def populate_constructor_sub_theme(self, e, sub_theme_dropdown):
+#             sub_theme_dropdown.options = [
+#                 dropdown.Option(item)
+#                 for item in self.themes_dict.get(
+#                     self.subject_dropdown_constructor.value, {}
+#                 ).get(e.control.value, [])
+#             ]
+#             sub_theme_dropdown.value = None
+#             sub_theme_dropdown.update()
+
+#     def generate_constructor_task(self, e):
+#         subject = self.subject_dropdown_constructor.value
+#         n_tasks = (
+#             int(self.number_of_tasks_constructor.value)
+#             if self.number_of_tasks_constructor.value
+#             else 1
+#         )
+#         tasks_data = []
+#         for i in range(n_tasks):
+#             theme_dropdown = self.task_fields_constructor.controls[i].controls[0]
+#             sub_theme_dropdown = self.task_fields_constructor.controls[i].controls[1]
+#             theme = theme_dropdown.value
+#             sub_theme = sub_theme_dropdown.value
+#             if theme and sub_theme:
+#                 tasks_data.append({"Theme": theme, "Theme_section": sub_theme})
+#             else:
+#                 self.page.show_snack_bar(
+#                     SnackBar(Text("Пожалуйста, выберите раздел и тему для каждой задачи."))
+#                 )
+#                 return
+
+#         if tasks_data:
+#             full_text = ""
+#             for task in tasks_data:
+#                 key = {"Subject": subject, **task}
+#                 full_text += FEF.GetTaskText(key) + "\n\n"
+#             self.output_text.value = full_text
+#             self.output_column.update()
 
 
 # if __name__ == "__main__":
 #     def main(page: Page):
-#         Window = Interface(page)
+#         window = Interface(page)
 #         page.window_width = 900
 #         page.window_height = 860
-#         Window.rebuild('Быстрая генерация')
-#         page.window_center()
+#         window.rebuild('Быстрая генерация')
+#         page.update()  # Используйте метод update вместо window_center
 
-#     app(target=main)
+#     main(Page)

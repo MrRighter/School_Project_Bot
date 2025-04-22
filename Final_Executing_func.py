@@ -57,9 +57,15 @@ async def send_result(message: types.Message):
             await message.answer(text=print_text_result[1], parse_mode=types.ParseMode.HTML)
             absolute_path = os.path.abspath(f"{path}")
             os.remove(absolute_path)
+    except KeyError as e:
+        await message.answer("Ошибка в параметрах задачи")
+        print(f"KeyError: {e}")
+    except ValueError as e:
+        await message.answer("Некорректные входные данные")
+        print(f"ValueError: {e}")
     except Exception as e:
-        await message.answer(text="Извините, произошла неизвестная ошибка.")
-        print(f"Произошла ошибка: {e}")
+        await message.answer("Ошибка генерации задач")
+        print(f"Exception: {e}")
 
 
 def GetTaskText(key):

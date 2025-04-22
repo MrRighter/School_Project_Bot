@@ -71,28 +71,24 @@ class Creator():
         #         elif key["Theme"] == "работа и энергия":
         #             pass
         #     elif key["Subject"] == "математика":
-        #         pass
-        # elif key["Type"] == "контрольная работа":
-        #     if key["Subject"] == "физика":
-        #         if key["Theme"] == "кинематика":
-        #             if key["Theme_section"] == "":
-        #                 num_questions = round(0.3 * int(key["N"]))
-        #                 num_tests = round(0.2 * int(key["N"]))
-        #                 num_problems = int(key["N"]) - num_questions - num_tests
-        #                 for i in range(num_questions):
-        #                     que_text_result += f'{i+1}) {TaskGenerator().questions_for_kr_kinematics()}\n\n'
-        #                 for i in range(num_tests):
-        #                     que_text_result += f'{num_questions + i+1}) {TaskGenerator().tests_for_kr_kinematics()}\n\n'
-        #                 for i in range(num_problems):
-        #                     que_text_result += f'{num_questions + num_tests + i+1}) {TaskGenerator().phis_kr_kinematics()}\n\n'
-        #                 return que_text_result
-        #         elif key["Theme"] == "механика":
-        #             if key["Theme_section"] == "":
-        #                 for i in range(int(key["N"])):
-        #                     que_text_result += f'{i+1}) {TaskGenerator().phis_kr_mechanics()}\n\n'
-        #                 return que_text_result
-        #         elif key["Theme"] == "баллистика":
-        #             if key["Theme_section"] == "":
-        #                 for i in range(int(key["N"])):
-        #                     que_text_result += f'{i+1}) {TaskGenerator().phis_kr_ballistics()}\n\n'
-        #                 return que_text_result
+        #         passelif key["Type"] == "контрольная работа":
+
+        if key["Subject"].lower() == "физика":
+            if key["Theme"].lower() == "кинематика":
+                num_questions = max(1, round(0.3 * int(key["N"])))
+                num_tests = max(1, round(0.2 * int(key["N"])))
+                num_problems = int(key["N"]) - num_questions - num_tests
+
+                for i in range(num_questions):
+                    que_text_result += f'{i+1}) {TaskGenerator().questions_for_kr_kinematics()}\n\n'
+
+                for i in range(num_tests):
+                    question, options = TaskGenerator().tests_for_kr_kinematics().split('\n')
+                    que_text_result += f'{num_questions+i+1}) {question}\n{options}\n\n'
+
+                for i in range(num_problems):
+                    que_ans_text = TaskGenerator().phis_kr_kinematics()
+                    que_text_result += f'{num_questions+num_tests+i+1}) {que_ans_text[0]}\n\n'
+                    ans_text_result += f'{num_questions+num_tests+i+1}) {que_ans_text[1][0]} {que_ans_text[2][0]}\n'
+
+                return que_text_result, ans_text_result
