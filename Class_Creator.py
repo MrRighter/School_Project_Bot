@@ -2,7 +2,7 @@ from Class_Gener import *
 from fpdf import FPDF
 
 
-class Creator():
+class Creator:
     def export_task(self, path, key):
         pdf = FPDF()
         pdf.add_page()

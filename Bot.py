@@ -1,6 +1,4 @@
-import os
-
-from aiogram import Bot, types, Dispatcher, executor
+from aiogram import Bot, Dispatcher, executor
 from dotenv import load_dotenv
 
 import callbacks as call

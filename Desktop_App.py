@@ -200,7 +200,7 @@ class TaskGeneratorApp:
             subj = Dropdown(label=f"Предмет {i+1}", options=[dropdown.Option(s) for s in self.subjects], value="Физика", width=150)
             them = Dropdown(label=f"Раздел {i+1}", options=[dropdown.Option(t) for t in self.subjects["Физика"]], width=150)
             subth = Dropdown(label=f"Тема {i+1}", width=260)
-            them.on_change = lambda e, subth=subth: self._populate_subthemes(e, subth)
+            them.on_change = lambda x, y=subth: self._populate_subthemes(x, y)
             self.const_tasks_container.controls.append(Row([subj, them, subth], spacing=10))
         self.const_tasks_container.update()
 

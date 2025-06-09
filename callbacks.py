@@ -1,5 +1,3 @@
-from aiogram import types
-
 from Kb_and_InlButtons import *
 import Final_Executing_func as fef
 from Final_Executing_func import *

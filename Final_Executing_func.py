@@ -66,12 +66,3 @@ async def send_result(message: types.Message):
     except Exception as e:
         await message.answer("Ошибка генерации задач")
         print(f"Exception: {e}")
-
-
-def GetTaskText(key):
-    path = f'./Файл с задачами.pdf'
-    print_text_result = Creator().function_creator(key)
-    tasks = print_text_result[0]
-    answers = print_text_result[1]
-    text = tasks + '\n' + answers
-    return text
