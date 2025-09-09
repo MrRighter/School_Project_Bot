@@ -39,7 +39,7 @@ pip install -r requirements.txt
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/sidorov">
+      <a href="https://github.com/konovki">
         <img src="https://avatars.githubusercontent.com/konovki" width="100px;" alt="konovki"/>
         <br />
         <sub><b>konovki</b></sub>
@@ -48,7 +48,7 @@ pip install -r requirements.txt
       <span>Team Lead</span>
     </td>
     <td align="center">
-      <a href="https://github.com/ivanov">
+      <a href="https://github.com/MrRighter">
         <img src="https://avatars.githubusercontent.com/MrRighter" width="100px;" alt="MrRighter"/>
         <br />
         <sub><b>MrRighter</b></sub>
@@ -57,7 +57,7 @@ pip install -r requirements.txt
       <span>Backend</span>
     </td>
     <td align="center">
-      <a href="https://github.com/petrova">
+      <a href="https://github.com/romka256765">
         <img src="https://avatars.githubusercontent.com/romka256765" width="100px;" alt="romka256765"/>
         <br />
         <sub><b>romka256765</b></sub>
